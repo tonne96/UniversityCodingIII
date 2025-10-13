@@ -16,11 +16,11 @@ class VerwaltungTest {
     void einfuegenPlusOne() {
         Verwaltung verwaltung = new Verwaltung();
         Audio audio = new Audio();
-        String[] list = verwaltung.auflisten();
+        Audio[] list = verwaltung.auflisten();
 
         verwaltung.einfuegen(audio);
 
-        String[] list2 = verwaltung.auflisten();
+        Audio[] list2 = verwaltung.auflisten();
         assertEquals(list.length + 1, list2.length);
     }
 

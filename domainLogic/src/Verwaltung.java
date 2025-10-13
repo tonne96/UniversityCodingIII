@@ -5,7 +5,7 @@ public class Verwaltung {
         return false;
     }
 
-    public String[] auflisten() {
+    public Audio[] auflisten() {
         return null;
     }
 
