@@ -17,13 +17,13 @@ public class Verwaltung {
         }
 
         // aktuelle Groese merken
-        int anfangsGroesse = verwaltungsListe.size();
+        int startSize = verwaltungsListe.size();
 
         // Element hinzufügen
         verwaltungsListe.add(audio);
 
         // pruefen, ob Groesse +1
-        return verwaltungsListe.size() == anfangsGroesse + 1;
+        return verwaltungsListe.size() == startSize + 1;
     }
 
     public void auflisten() {
@@ -33,7 +33,17 @@ public class Verwaltung {
     }
 
     public boolean entfernen(Audio audio) {
-        return false;
+        // Null‑Check
+        if (audio == null) {
+            return false;
+        }
+
+        int startSize = verwaltungsListe.size();
+        // entfernen
+        verwaltungsListe.remove(audio);
+
+
+        return verwaltungsListe.size() == startSize - 1;
     }
 
     public boolean aendern(Audio audio) {

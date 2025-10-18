@@ -28,18 +28,38 @@ class VerwaltungTest {
     }
 
     @org.junit.jupiter.api.Test
-    void einfuegenInListe() {
-        fail();
-    }
-
-    @org.junit.jupiter.api.Test
     void auflisten() {
         fail();
     }
 
+
+    @org.junit.jupiter.api.Test
+    void entfernenNull() {
+        Verwaltung verwaltung = new Verwaltung();
+        Audio audio = null;
+
+        verwaltung.entfernen(audio);
+        boolean r = verwaltung.entfernen(audio);
+        assertEquals(false, r);
+    }
+
+    @org.junit.jupiter.api.Test
+    void entfernenEmptyList() {
+
+    }
+
+
     @org.junit.jupiter.api.Test
     void entfernen() {
-        fail();
+        Verwaltung verwaltung = new Verwaltung();
+        ArrayList<Audio> list1 = verwaltung.getVerwaltungsListe();
+        Audio audio = new Audio();
+
+        verwaltung.entfernen(audio);
+
+        ArrayList<Audio> list2 = verwaltung.getVerwaltungsListe();
+
+        assertEquals(list1.size() - 1, list2);
     }
 
     @org.junit.jupiter.api.Test
