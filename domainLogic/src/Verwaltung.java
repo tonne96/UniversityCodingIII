@@ -11,13 +11,19 @@ public class Verwaltung {
     }
 
     public boolean einfuegen(Audio audio) {
-        // check audio = null
-        if (audio == null) return false;
-        // audio hinzufügen und pruefen ob Laenge liste + 1
-        //int ursprungListenLaenge = verwaltungsListe.size();
+        // Null‑Check
+        if (audio == null) {
+            return false;
+        }
+
+        // aktuelle Groese merken
+        int anfangsGroesse = verwaltungsListe.size();
+
+        // Element hinzufügen
         verwaltungsListe.add(audio);
-        // if (verwaltungsListe.size() > ursprungListenLaenge) return true;
-        return false;
+
+        // pruefen, ob Groesse +1
+        return verwaltungsListe.size() == anfangsGroesse + 1;
     }
 
     public void auflisten() {
