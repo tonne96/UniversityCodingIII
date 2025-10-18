@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class VerwaltungTest {
@@ -16,28 +18,40 @@ class VerwaltungTest {
     void einfuegenPlusOne() {
         Verwaltung verwaltung = new Verwaltung();
         Audio audio = new Audio();
-        Audio[] list = verwaltung.auflisten();
+        int list1size  = verwaltung.getVerwaltungsListe().size();
 
         verwaltung.einfuegen(audio);
 
-        Audio[] list2 = verwaltung.auflisten();
-        assertEquals(list.length + 1, list2.length);
+        ArrayList<Audio> list2 = verwaltung.getVerwaltungsListe();
+
+        assertEquals(list1size + 1, list2.size());
     }
 
+    @org.junit.jupiter.api.Test
     void einfuegenInListe() {
-
+        fail();
     }
 
     @org.junit.jupiter.api.Test
     void auflisten() {
+        fail();
     }
 
     @org.junit.jupiter.api.Test
     void entfernen() {
+        fail();
     }
 
     @org.junit.jupiter.api.Test
     void aendern() {
+        Verwaltung verwaltung = new Verwaltung();
+        Audio audio = new Audio();
+        int audio1counter = audio.getAccressCount();
+
+        verwaltung.aendern(audio);
+
+        int audio2counter = audio.getAccressCount();
+        assertEquals(audio1counter + 1, audio2counter);
     }
 
 }
