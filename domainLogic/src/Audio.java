@@ -1,15 +1,76 @@
-public class Audio {
-    private int accressCount;
+import contract.Tag;
+import contract.Uploader;
+
+import java.math.BigDecimal;
+import java.time.Duration;
+import java.util.Collection;
+import java.util.List;
+
+public class Audio implements contract.AudioVideo {
+    private int accessCount;
+    private int id;
+    private String title;
 
     public Audio() {
-        accressCount = accressCount + 1;
+        id++;
     }
 
-    public int getAccressCount() {
-        return accressCount;
+
+    public int getId() {
+        return id;
     }
 
-    public void setAccressCount(int accressCount) {
-        this.accressCount = accressCount;
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        accessCount++;
+        this.title = title;
+    }
+
+    @Override
+    public int getSamplingRate() {
+        return 0;
+    }
+
+    @Override
+    public String getAddress() {
+        return "";
+    }
+
+    @Override
+    public Collection<Tag> getTags() {
+        return List.of();
+    }
+
+    @Override
+    public int getAccessCount() {
+        return accessCount;
+    }
+
+    @Override
+    public long getSize() {
+        return 0;
+    }
+
+    @Override
+    public Uploader getUploader() {
+        return null;
+    }
+
+    @Override
+    public Duration getAvailability() {
+        return null;
+    }
+
+    @Override
+    public BigDecimal getCost() {
+        return null;
+    }
+
+    @Override
+    public int getResolution() {
+        return 0;
     }
 }
