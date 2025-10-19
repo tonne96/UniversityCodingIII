@@ -28,10 +28,14 @@ public class Administration {
         return administrationList.size() == startSize + 1;
     }
 
-    public void listItems() {
+    public boolean listItems() {
+        // empty check
+        if (administrationList.isEmpty()) return false;
+
         for (AudioVideo object: administrationList) {
             System.out.println(object.getClass().getSimpleName() + object.getTags());   // https://www.geeksforgeeks.org/java/class-getsimplename-method-in-java-with-examples/
         }
+        return false;
     }
 
     public boolean remove(Audio audio) {
