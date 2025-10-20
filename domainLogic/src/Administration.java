@@ -1,61 +1,49 @@
 import contract.AudioVideo;
+import contract.MediaContent;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Administration {
 
     // Liste wo alles drin gespeichert wird
-    private final ArrayList<Audio> administrationList = new ArrayList<>();
+    private final ArrayList<MediaContent> administrationList = new ArrayList<>();
 
-    public ArrayList<Audio> getAdministrationList() {
+    public ArrayList<MediaContent> getAdministrationList() {
         return administrationList;
     }
 
     // Quelle fuer Generics : https://www.w3schools.com/java/java_generics.asp
-    public <T extends Audio> boolean addToList(T object) {
+    public boolean addToList(MediaContent mediaContent) {
         // Null‑Check
-        if (object == null) {
+        if (mediaContent == null) {
             return false;
         }
 
-        // aktuelle Groese merken
-        int startSize = administrationList.size();
-
-        // Element hinzufügen
-        administrationList.add(object);
-
-        // pruefen, ob Groesse +1
-        return administrationList.size() == startSize + 1;
+        administrationList.add(mediaContent);
+        return true;
     }
 
-    public boolean listItems() {
-        // empty check
-        if (administrationList.isEmpty()) return false;
+    public boolean add(MediaContent mediaContent) {
 
-        for (AudioVideo object: administrationList) {
-            System.out.println(object.getClass().getSimpleName() + object.getTags());   // https://www.geeksforgeeks.org/java/class-getsimplename-method-in-java-with-examples/
-        }
         return false;
     }
-
-    public boolean remove(Audio audio) {
-        // Null‑Check
-        if (audio == null) {
-            return false;
-        }
-        // empty list check
-        if (administrationList.isEmpty()) return false;
-
-        int startSize = administrationList.size();
-
-        administrationList.remove(audio);
-
-        return administrationList.size() == startSize - 1;
+    public List<MediaContent> listItems() {
+        return Collections.unmodifiableList(administrationList);    // gibt Liste zurück aber nicht veränderbar
     }
 
-    public boolean update(Audio updateAudio, String newTitle) {
+    public boolean remove(MediaContent mediaContent) {
         // Null‑Check
-        if (updateAudio == null) {
+        if (mediaContent == null) {
+            return false;
+        }
+        return administrationList.remove(mediaContent);
+    }
+
+    public boolean update(MediaContent object, String newTitle) {
+        // Null‑Check
+        if (object == null) {
             return false;
         }
         // empty string check
@@ -64,12 +52,16 @@ public class Administration {
         String updatedTitle = "";
 
         // update Audio
-        for (Audio audio: administrationList) {
-            if (audio == updateAudio) {
-                audio.setTitle(newTitle);
-                updatedTitle = audio.getTitle();
+        /*
+        for (MediaContent media: administrationList) {
+            if (media == object) {
+                media.(newTitle);
+                updatedTitle = media.getTitle();
             } else return false;
         }
+         */
         return newTitle.equals(updatedTitle);
     }
+
+
 }

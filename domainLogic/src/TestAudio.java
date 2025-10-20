@@ -1,30 +1,25 @@
-import contract.MediaContent;
+import contract.Audio;
 import contract.Tag;
 import contract.Uploader;
 
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.Collection;
+import java.util.List;
 
-public class Audio implements MediaContent, contract.Audio {
-    private int samplingRate;
-    private String address;
-    private Collection<Tag> tags;
-    private int accessCount;
-    private long size;
-    private Uploader uploader;
-    private Duration availability;
-    private BigDecimal cost;
+public class TestAudio implements Audio {
+    String address;
 
-
-
-    public Audio() {
-        accessCount++;
+    public TestAudio(String address) {
+        if (address == null) throw new NullPointerException("Address must not be null");
+        this.address = address;
     }
+
+
 
     @Override
     public int getSamplingRate() {
-        return samplingRate;
+        return 0;
     }
 
     @Override
@@ -34,31 +29,31 @@ public class Audio implements MediaContent, contract.Audio {
 
     @Override
     public Collection<Tag> getTags() {
-        return tags;
+        return List.of();
     }
 
     @Override
     public int getAccessCount() {
-        return accessCount;
+        return 0;
     }
 
     @Override
     public long getSize() {
-        return size;
+        return 0;
     }
 
     @Override
     public Uploader getUploader() {
-        return uploader;
+        return null;
     }
 
     @Override
     public Duration getAvailability() {
-        return availability;
+        return null;
     }
 
     @Override
     public BigDecimal getCost() {
-        return cost;
+        return null;
     }
 }
