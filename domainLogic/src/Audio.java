@@ -29,6 +29,7 @@ public class Audio implements MediaContent, contract.Audio {
 
     @Override
     public String getAddress() {
+        accessCount++;
         return address;
     }
 

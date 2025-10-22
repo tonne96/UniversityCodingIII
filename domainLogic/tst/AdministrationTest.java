@@ -28,7 +28,7 @@ class AdministrationTest {
     }
 
     @Test
-    void listItemsNull() {
+    void listItemsEmpty() {
         fail();
     }
 
@@ -58,19 +58,13 @@ class AdministrationTest {
 
     @Test
     void updateAccessCounter() {
-
-        int audio1counter = mediaContent.getAccessCount();
+        int mediaContentAccessCount1 = mediaContent.getAccessCount();
 
         administration.addToList(mediaContent);
-        administration.update(mediaContent, "Test");
+        administration.update(mediaContent);
 
-        int audio2counter = mediaContent.getAccessCount();
-        assertEquals(audio1counter + 1, audio2counter);
-    }
-
-    @Test
-    void updateNameIsEmpty() {
-        assertFalse(administration.update(mediaContent, ""));
+        int mediaContentAccessCount2 = mediaContent.getAccessCount();
+        assertEquals(mediaContentAccessCount1 + 1, mediaContentAccessCount2);
     }
 
     @Test
