@@ -11,7 +11,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class AdministrationTest {
-
+    //no ok
     private final Administration administration = new Administration();
     private final MediaObjects mediaObjects = new AudioClass();
 
