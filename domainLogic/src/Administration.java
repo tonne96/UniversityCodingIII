@@ -39,12 +39,14 @@ public class Administration {
     public boolean update(MediaContent mediaContent) {
         // Null‑Check
         if (mediaContent == null) return false;
-        for (MediaContent object: administrationList) {
+        /* for (MediaContent object: administrationList) {
             if (Objects.equals(object.getAddress(), mediaContent.getAddress())) {
                 administrationList.remove(object);
                 administrationList.add(mediaContent);
             } else return false;
         }
+         */
+        mediaContent.getAddress();
         return true;
     }
 

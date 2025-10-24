@@ -19,7 +19,11 @@ public class Audio implements MediaContent, contract.Audio {
 
 
     public Audio() {
-        accessCount++;
+
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Override
