@@ -22,7 +22,9 @@ public class Administration {
     }
 
     public List<MediaObjects> listItems() {
-        return Collections.unmodifiableList(administrationList);    // gibt Liste zurück aber nicht veränderbar
+        // gibt Liste zurück aber nicht veränderbar
+        // Quelle: https://www.geeksforgeeks.org/advance-java/collections-unmodifiablelist-method-in-java-with-examples/
+        return Collections.unmodifiableList(administrationList);
     }
 
     public boolean remove(MediaObjects mediaObject) {
