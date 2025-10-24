@@ -1,45 +1,40 @@
-import contract.AudioVideo;
-import contract.MediaContent;
+import contract.MediaObjects;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class Administration {
 
     // Liste wo alles drin gespeichert wird
-    private final ArrayList<MediaContent> administrationList = new ArrayList<>();
+    private final ArrayList<MediaObjects> administrationList = new ArrayList<>();
 
-    public ArrayList<MediaContent> getAdministrationList() {
+    public ArrayList<MediaObjects> getAdministrationList() {
         return administrationList;
     }
 
 
-    public boolean addToList(MediaContent mediaContent) {
-        if (mediaContent != null) {
-            administrationList.add(mediaContent);
+    public boolean addToList(MediaObjects mediaObject) {
+        if (mediaObject != null) {
+            administrationList.add(mediaObject);
         }
         return false;
     }
 
-    public List<MediaContent> listItems() {
+    public List<MediaObjects> listItems() {
         return Collections.unmodifiableList(administrationList);    // gibt Liste zurück aber nicht veränderbar
     }
 
-    public boolean remove(MediaContent mediaContent) {
-        if (mediaContent != null) {
-            return administrationList.remove(mediaContent);
+    public boolean remove(MediaObjects mediaObject) {
+        if (mediaObject != null) {
+            return administrationList.remove(mediaObject);
         }
         return false;
     }
 
-    public boolean update(MediaContent mediaContent) {
-        if (mediaContent == null) return false;
-
-        if (mediaContent instanceof Audio audio) {
-            audio.incrementAccessCount();
-        }
+    public boolean update(MediaObjects mediaObject) {
+        if (mediaObject == null) return false;
+        mediaObject.incrementAccessCounter();
         return true;
     }
 }

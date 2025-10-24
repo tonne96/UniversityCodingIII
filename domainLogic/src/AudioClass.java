@@ -1,13 +1,10 @@
-import contract.MediaContent;
-import contract.Tag;
-import contract.Uploadable;
-import contract.Uploader;
+import contract.*;
 
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.Collection;
 
-public class Audio implements MediaContent, contract.Audio, Uploadable {
+public class AudioClass implements MediaObjects, contract.Audio {
     private int samplingRate;
     private String address;
     private Collection<Tag> tags;
@@ -16,11 +13,6 @@ public class Audio implements MediaContent, contract.Audio, Uploadable {
     private Uploader uploader;
     private Duration availability;
     private BigDecimal cost;
-
-
-    public void incrementAccessCount() {
-        accessCount++;
-    }
 
     @Override
     public int getSamplingRate() {
@@ -60,5 +52,10 @@ public class Audio implements MediaContent, contract.Audio, Uploadable {
     @Override
     public BigDecimal getCost() {
         return cost;
+    }
+
+    @Override
+    public void incrementAccessCounter() {
+        accessCount++;
     }
 }

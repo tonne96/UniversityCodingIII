@@ -1,15 +1,19 @@
+import contract.Audio;
 import contract.MediaContent;
+import contract.MediaObjects;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class AdministrationTest {
 
     private final Administration administration = new Administration();
-    private final MediaContent mediaContent = new Audio();
+    private final MediaObjects mediaObjects = new AudioClass();
 
     @Test
     void addToListNull() {
@@ -19,10 +23,9 @@ class AdministrationTest {
     @Test
     void addToListPlusOne() {
         int list1size  = administration.getAdministrationList().size();
+        administration.addToList(mediaObjects);
 
-        administration.addToList(mediaContent);
-
-        ArrayList<MediaContent> list2 = administration.getAdministrationList();
+        ArrayList<MediaObjects> list2 = administration.getAdministrationList();
 
         assertEquals(list1size + 1, list2.size());
     }
@@ -44,18 +47,31 @@ class AdministrationTest {
 
     @Test
     void removeEmptyList() {
-        assertFalse(administration.remove(mediaContent));
+        assertFalse(administration.remove(mediaObjects));
     }
 
 
     @Test
     void remove() {
-        administration.addToList(mediaContent);
+        administration.addToList(mediaObjects);
         int list1size = administration.getAdministrationList().size();
 
-        administration.remove(mediaContent);
+        administration.remove(mediaObjects);
 
-        ArrayList<MediaContent> list2 = administration.getAdministrationList();
+        ArrayList<MediaObjects> list2 = administration.getAdministrationList();
+
+        assertEquals(list1size- 1, list2.size());
+    }
+
+    @Test
+    void remove_mock() {
+        administration.addToList(mediaObjects);
+        int list1size = administration.getAdministrationList().size();
+        AudioClass audio = mock(AudioClass.class);
+        when(audio.getSize()).thenReturn(1000L);
+        administration.remove(mediaObjects);
+
+        ArrayList<MediaObjects> list2 = administration.getAdministrationList();
 
         assertEquals(list1size- 1, list2.size());
     }
@@ -68,11 +84,11 @@ class AdministrationTest {
 
     @Test
     void updateAccessCounter() {
-        int mediaContentAccessCount1 = mediaContent.getAccessCount();
+        int mediaContentAccessCount1 = mediaObjects.getAccessCount();
 
-        administration.update(mediaContent);
+        administration.update(mediaObjects);
 
-        int mediaContentAccessCount2 = mediaContent.getAccessCount();
+        int mediaContentAccessCount2 = mediaObjects.getAccessCount();
 
         assertEquals(mediaContentAccessCount1 + 1, mediaContentAccessCount2);
     }
