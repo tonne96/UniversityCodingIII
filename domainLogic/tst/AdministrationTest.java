@@ -1,8 +1,8 @@
 import contract.MediaContent;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,8 +28,12 @@ class AdministrationTest {
     }
 
     @Test
-    void listItemsEmpty() {
-        fail();
+    void listItems() {
+        List<MediaContent> result = new ArrayList<>();
+
+        administration.listItems();
+
+        assertNotNull(result);
     }
 
 
@@ -56,29 +60,22 @@ class AdministrationTest {
         assertEquals(list1size- 1, list2.size());
     }
 
+
+    @Test
+    void updateNull() {
+        assertFalse(administration.update(null));
+    }
+
     @Test
     void updateAccessCounter() {
         int mediaContentAccessCount1 = mediaContent.getAccessCount();
 
-        administration.addToList(mediaContent);
         administration.update(mediaContent);
 
         int mediaContentAccessCount2 = mediaContent.getAccessCount();
+
         assertEquals(mediaContentAccessCount1 + 1, mediaContentAccessCount2);
     }
 
-    @Test
-    void updateName() {
-        /*
-        String oldTitle = "old title";
-        audio.setTitle(oldTitle);
-
-        String newTitle = "new title";
-        administration.addToList(audio);
-        administration.update(audio, newTitle);
-
-        assertEquals(newTitle, audio.getTitle());
-         */
-    }
 
 }

@@ -10,18 +10,17 @@ public class Administration {
 
     // Liste wo alles drin gespeichert wird
     private final ArrayList<MediaContent> administrationList = new ArrayList<>();
+
     public ArrayList<MediaContent> getAdministrationList() {
         return administrationList;
     }
 
 
     public boolean addToList(MediaContent mediaContent) {
-        // Null‑Check
-        if (mediaContent == null) {
-            return false;
+        if (mediaContent != null) {
+            administrationList.add(mediaContent);
         }
-        administrationList.add(mediaContent);
-        return true;
+        return false;
     }
 
     public List<MediaContent> listItems() {
@@ -29,26 +28,18 @@ public class Administration {
     }
 
     public boolean remove(MediaContent mediaContent) {
-        // Null‑Check
-        if (mediaContent == null) {
-            return false;
+        if (mediaContent != null) {
+            return administrationList.remove(mediaContent);
         }
-        return administrationList.remove(mediaContent);
+        return false;
     }
 
     public boolean update(MediaContent mediaContent) {
-        // Null‑Check
         if (mediaContent == null) return false;
-        /* for (MediaContent object: administrationList) {
-            if (Objects.equals(object.getAddress(), mediaContent.getAddress())) {
-                administrationList.remove(object);
-                administrationList.add(mediaContent);
-            } else return false;
+
+        if (mediaContent instanceof Audio audio) {
+            audio.incrementAccessCount();
         }
-         */
-        mediaContent.getAddress();
         return true;
     }
-
-
 }

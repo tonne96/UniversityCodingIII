@@ -1,12 +1,13 @@
 import contract.MediaContent;
 import contract.Tag;
+import contract.Uploadable;
 import contract.Uploader;
 
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.Collection;
 
-public class Audio implements MediaContent, contract.Audio {
+public class Audio implements MediaContent, contract.Audio, Uploadable {
     private int samplingRate;
     private String address;
     private Collection<Tag> tags;
@@ -17,13 +18,8 @@ public class Audio implements MediaContent, contract.Audio {
     private BigDecimal cost;
 
 
-
-    public Audio() {
-
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public void incrementAccessCount() {
+        accessCount++;
     }
 
     @Override

@@ -9,6 +9,6 @@ public class Main {
         administration.addToList(audio2);
         administration.addToList(audio3);
 
-        administration.listItems();
+        System.out.println(administration.listItems());
     }
 }
