@@ -33,8 +33,9 @@ public class Administration {
     }
 
     public boolean update(MediaObjects mediaObject) {
-        if (mediaObject == null) return false;
-        mediaObject.incrementAccessCounter();
-        return true;
+        if (mediaObject != null) {
+            mediaObject.incrementAccessCounter();
+        }
+        return false;
     }
 }
