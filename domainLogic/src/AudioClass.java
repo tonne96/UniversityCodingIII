@@ -2,9 +2,11 @@ import contract.*;
 
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.time.Instant;
 import java.util.Collection;
 
 public class AudioClass implements MediaObjects, contract.Audio {
+    Instant create = Instant.now();
     private int samplingRate;
     private String address;
     private Collection<Tag> tags;
@@ -46,7 +48,8 @@ public class AudioClass implements MediaObjects, contract.Audio {
 
     @Override
     public Duration getAvailability() {
-        return availability;
+        Instant now = Instant.now();
+        return Duration.between(create, now);
     }
 
     @Override
