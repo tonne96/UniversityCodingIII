@@ -5,7 +5,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Collection;
 
-public class AudioClass implements MediaObjects, contract.Audio {
+public class AudioImpl implements MediaObjects, contract.Audio {
     Instant create = Instant.now();
     private int samplingRate;
     private String address;

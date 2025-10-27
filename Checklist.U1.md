@@ -1,5 +1,5 @@
 # Übung 1
-Erstellen Sie die Geschäftslogik des Belegs prototypisch und testen Sie exemplarisch. Für die Übung müssen nicht alle Anforderungen realisiert werden aber mindestens CRUD d.h. Einfügen, Auflisten, Ändern (AccessCount) und Entfernen für mindestens einen Typ von den im Vertrag vordefinierten Medien, z.B. AudioClass.
+Erstellen Sie die Geschäftslogik des Belegs prototypisch und testen Sie exemplarisch. Für die Übung müssen nicht alle Anforderungen realisiert werden aber mindestens CRUD d.h. Einfügen, Auflisten, Ändern (AccessCount) und Entfernen für mindestens einen Typ von den im Vertrag vordefinierten Medien, z.B. AudioImpl.
 
 Weitere Informationen stehen im Anforderungsdokument unter der Überschrift GL.
 
@@ -16,20 +16,20 @@ Flüchtige Quellen, wie LLMs, sind per screen shot zu dokumentieren.
 0 Punkte wenn die grundsätzlichen Anforderungen nicht erfüllt sind. 1 Punkt für die Erfüllung der Basisanforderung und darauf aufbauend je ein Punkt für die nummerierten Anforderungen.
 
 ### grundsätzliche Anforderungen
-- [ ] Quellen angegeben
+- [X] Quellen angegeben
 - [ ] Abgabe als zip-Archiv mit dem Projekt im root
-- [ ] IntelliJ-Projekt (kein Gradle, Maven o.ä.)
-- [ ] keine weiteren Bibliotheken außer JUnit5, Mockito und JavaFX (und deren Abhängigkeiten)
-- [ ] keine Umlaute, Sonderzeichen, etc. in Datei- und Pfadnamen
-- [ ] kompilierbar
-- [ ] Trennung zwischen Test- und Produktiv-Code
+- [X] IntelliJ-Projekt (kein Gradle, Maven o.ä.)
+- [X] keine weiteren Bibliotheken außer JUnit5, Mockito und JavaFX (und deren Abhängigkeiten)
+- [X] keine Umlaute, Sonderzeichen, etc. in Datei- und Pfadnamen
+- [X] kompilierbar
+- [X] Trennung zwischen Test- und Produktiv-Code
 - [ ] geforderte main-Methoden nur im default package des Moduls belegProg3, nicht in den Submodulen
-- [ ] keine vorgetäuschte Funktionalität (inkl. leere Tests)
-- [ ] ausführbar
+- [X] keine vorgetäuschte Funktionalität (inkl. leere Tests)
+- [X] ausführbar
 
 ### Basisanforderung
-- [ ] CRUD für einen Typ
-- [ ] mindestens ein Test
+- [X] CRUD für einen Typ
+- [X] mindestens ein Test
 
 ### 1 Ausbau GL
 - [ ] Einfügen der Mediadateien vollständig implementiert (siehe Anfoderungsdokument)

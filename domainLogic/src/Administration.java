@@ -22,7 +22,9 @@ public class Administration {
     }
 
     public List<MediaObjects> listItems() {
-        return Collections.unmodifiableList(administrationList);    // gibt Liste zurück aber nicht veränderbar
+        // gibt Liste zurück aber nicht veränderbar
+        // Quelle: https://www.geeksforgeeks.org/advance-java/collections-unmodifiablelist-method-in-java-with-examples/
+        return Collections.unmodifiableList(administrationList);
     }
 
     public boolean remove(MediaObjects mediaObject) {
@@ -33,8 +35,9 @@ public class Administration {
     }
 
     public boolean update(MediaObjects mediaObject) {
-        if (mediaObject == null) return false;
-        mediaObject.incrementAccessCounter();
-        return true;
+        if (mediaObject != null) {
+            mediaObject.incrementAccessCounter();
+        }
+        return false;
     }
 }
