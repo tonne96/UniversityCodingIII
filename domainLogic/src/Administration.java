@@ -18,6 +18,7 @@ public class Administration {
         if (mediaObject != null) {
             administrationList.add(mediaObject);
         }
+
         return false;
     }
 
