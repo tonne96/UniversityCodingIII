@@ -17,7 +17,7 @@ Flüchtige Quellen, wie LLMs, sind per screen shot zu dokumentieren.
 
 ### grundsätzliche Anforderungen
 - [X] Quellen angegeben
-- [ ] Abgabe als zip-Archiv mit dem Projekt im root
+- [X] Abgabe als zip-Archiv mit dem Projekt im root
 - [X] IntelliJ-Projekt (kein Gradle, Maven o.ä.)
 - [X] keine weiteren Bibliotheken außer JUnit5, Mockito und JavaFX (und deren Abhängigkeiten)
 - [X] keine Umlaute, Sonderzeichen, etc. in Datei- und Pfadnamen
