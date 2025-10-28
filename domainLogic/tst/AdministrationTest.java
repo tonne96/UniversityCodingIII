@@ -1,7 +1,12 @@
-import contract.MediaObjects;
+import contract.MediaObject;
+import contract.Tag;
+import contract.Uploader;
 import org.junit.jupiter.api.Test;
 
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,14 +21,15 @@ class AdministrationTest {
     }
 
     @Test
-    void addToListPlusOne() {
+    void addToListPlusOne() throws UnsupportedAudioFileException, IOException {
         Administration administration = new Administration();
-        AudioImpl audio = new AudioImpl();
+        UploaderImpl uploader = new UploaderImpl("Test");
+        AudioImpl audio = new AudioImpl(Collections.singleton(Tag.Animal), uploader, "'/Users/antoneckey/CODING/Programmieren 3/pure-tone.wav'");
         int list1size  = administration.getAdministrationList().size();
 
         administration.addToList(audio);
 
-        ArrayList<MediaObjects> list2 = administration.getAdministrationList();
+        ArrayList<MediaObject> list2 = administration.getAdministrationList();
 
         assertEquals(list1size + 1, list2.size());
     }
@@ -32,7 +38,7 @@ class AdministrationTest {
     void listItemsReturnsList() {
         Administration administration = new Administration();
 
-        List<MediaObjects> result = new ArrayList<>();
+        List<MediaObject> result = new ArrayList<>();
 
         administration.listItems();
 
@@ -66,7 +72,7 @@ class AdministrationTest {
 
         administration.remove(audio);
 
-        ArrayList<MediaObjects> list2 = administration.getAdministrationList();
+        ArrayList<MediaObject> list2 = administration.getAdministrationList();
 
         assertEquals(list1size- 1, list2.size());
     }

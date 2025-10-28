@@ -1,11 +1,19 @@
 import contract.*;
 
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Collection;
 
-public class AudioImpl implements MediaObjects, contract.Audio {
+public class AudioImpl implements MediaObject, contract.Audio {
     Instant create = Instant.now();
     private int samplingRate;
     private String address;
@@ -16,9 +24,22 @@ public class AudioImpl implements MediaObjects, contract.Audio {
     private Duration availability;
     private BigDecimal cost;
 
+    public AudioImpl() {
+    }
+
+    public AudioImpl(Collection<Tag> tags, Uploader uploader, String address) {
+        this.tags = tags;
+        this.uploader = uploader;
+        this.address = address;
+    }
+
     @Override
-    public int getSamplingRate() {
-        return samplingRate;
+    public int getSamplingRate() throws UnsupportedAudioFileException, IOException {
+        try (AudioInputStream ais = AudioSystem.getAudioInputStream(new File(address))) {
+            AudioFormat format = ais.getFormat();
+            return (int) format.getSampleRate();
+            // Quelle: https://codingtechroom.com/question/-convert-sample-rate-wav-file-java
+        }
     }
 
     @Override
@@ -37,8 +58,8 @@ public class AudioImpl implements MediaObjects, contract.Audio {
     }
 
     @Override
-    public long getSize() {
-        return size;
+    public long getSize() throws IOException {
+        return this.size = Files.size(Path.of(address));
     }
 
     @Override
@@ -60,5 +81,10 @@ public class AudioImpl implements MediaObjects, contract.Audio {
     @Override
     public void incrementAccessCounter() {
         accessCount++;
+    }
+
+    @Override
+    public long getMaxSize() {
+        return maxSize;
     }
 }

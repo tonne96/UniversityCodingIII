@@ -1,2 +1,14 @@
-public class UploaderImpl {
+import contract.Uploader;
+
+public class UploaderImpl implements Uploader {
+    private final String name;
+
+    public UploaderImpl(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
 }
