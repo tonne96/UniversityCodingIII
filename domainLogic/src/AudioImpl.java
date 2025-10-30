@@ -15,6 +15,7 @@ import java.util.Collection;
 
 public class AudioImpl implements MediaObject, contract.Audio {
     Instant create = Instant.now();
+    private String title;
     private int samplingRate;
     private String address;
     private Collection<Tag> tags;
@@ -27,10 +28,15 @@ public class AudioImpl implements MediaObject, contract.Audio {
     public AudioImpl() {
     }
 
-    public AudioImpl(Collection<Tag> tags, Uploader uploader, String address) {
+    public AudioImpl(String title, Collection<Tag> tags, Uploader uploader) {
+        this.title = title;
         this.tags = tags;
         this.uploader = uploader;
-        this.address = address;
+    }
+
+
+    public String getTitle() {
+        return title;
     }
 
     @Override

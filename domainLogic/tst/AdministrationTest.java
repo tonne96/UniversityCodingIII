@@ -23,8 +23,7 @@ class AdministrationTest {
     @Test
     void addToListPlusOne() throws UnsupportedAudioFileException, IOException {
         Administration administration = new Administration();
-        UploaderImpl uploader = new UploaderImpl("Test");
-        AudioImpl audio = new AudioImpl(Collections.singleton(Tag.Animal), uploader, "'/Users/antoneckey/CODING/Programmieren 3/pure-tone.wav'");
+        AudioImpl audio = new AudioImpl();
         int list1size  = administration.getAdministrationList().size();
 
         administration.addToList(audio);
@@ -32,6 +31,15 @@ class AdministrationTest {
         ArrayList<MediaObject> list2 = administration.getAdministrationList();
 
         assertEquals(list1size + 1, list2.size());
+    }
+
+    @Test
+    void addToListCheckExistingUploader() {
+        Administration administration = new Administration();
+        UploaderImpl uploader = new UploaderImpl("TestUploader");
+        AudioImpl audio = new AudioImpl("Test", Collections.singleton(Tag.Animal), uploader);
+
+        administration.addToList(audio);
     }
 
     @Test
