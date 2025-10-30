@@ -22,7 +22,6 @@ public class Administration {
 
     public boolean addMediaobjectToList(MediaObject mediaObject) {
         if (mediaObject != null
-                && checkIfUploaderAlreadyExists(mediaObject.getUploader())
                 && checkIfMediaobjectBelongsToExistingUploader(mediaObject)
                 && !checkMaxMediaSize(mediaObject)
                 && !checkIfAddressIsUnique(mediaObject)) {
