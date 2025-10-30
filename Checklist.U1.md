@@ -32,14 +32,14 @@ Flüchtige Quellen, wie LLMs, sind per screen shot zu dokumentieren.
 - [X] mindestens ein Test
 
 ### 1 Ausbau GL
-- [ ] Einfügen der Mediadateien vollständig implementiert (siehe Anfoderungsdokument)
-- [ ] Unterstützung von mindestens zwei Medientypen
+- [X] Einfügen der Mediadateien vollständig implementiert (siehe Anfoderungsdokument)
+- [X] Unterstützung von mindestens zwei Medientypen
 
 ### 2 Testabdeckung
 abhängig von 1
-- [ ] Einfügen der Mediadateien vollständig getestet (mindestens Pfadabdeckung)
+- [X] Einfügen der Mediadateien vollständig getestet (mindestens Pfadabdeckung)
 
 ### 3 Stellvertretertests
 abhängig von 1
-- [ ] mindestens zwei Tests mit Mockito
+- [X] mindestens zwei Tests mit Mockito
 
