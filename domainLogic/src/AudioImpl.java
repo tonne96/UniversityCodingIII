@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Collection;
+import java.util.Random;
 
 public class AudioImpl implements MediaObject, contract.Audio {
     Instant create = Instant.now();
@@ -29,6 +30,9 @@ public class AudioImpl implements MediaObject, contract.Audio {
     }
 
     public AudioImpl(String title, Collection<Tag> tags, Uploader uploader) {
+        int indexNumber = index;
+        indexNumber++;
+        this.address = "media://" + "Audio/" + uploader.getName() + "/" + indexNumber + "/" + create.toString();
         this.title = title;
         this.tags = tags;
         this.uploader = uploader;
@@ -40,12 +44,8 @@ public class AudioImpl implements MediaObject, contract.Audio {
     }
 
     @Override
-    public int getSamplingRate() throws UnsupportedAudioFileException, IOException {
-        try (AudioInputStream ais = AudioSystem.getAudioInputStream(new File(address))) {
-            AudioFormat format = ais.getFormat();
-            return (int) format.getSampleRate();
-            // Quelle: https://codingtechroom.com/question/-convert-sample-rate-wav-file-java
-        }
+    public int getSamplingRate() {
+        return samplingRate;
     }
 
     @Override
@@ -64,8 +64,8 @@ public class AudioImpl implements MediaObject, contract.Audio {
     }
 
     @Override
-    public long getSize() throws IOException {
-        return this.size = Files.size(Path.of(address));
+    public long getSize() {
+        return size;
     }
 
     @Override
@@ -88,6 +88,8 @@ public class AudioImpl implements MediaObject, contract.Audio {
     public void incrementAccessCounter() {
         accessCount++;
     }
+
+
 
     @Override
     public long getMaxSize() {

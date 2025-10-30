@@ -3,44 +3,151 @@ import contract.Tag;
 import contract.Uploader;
 import org.junit.jupiter.api.Test;
 
-import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 class AdministrationTest {
 
+    //________________________MEDIAOBJECTS_TO_LIST____________________________
+
     @Test
-    void addToListNull() {
+    void addMediaobjectToListNull() {
         Administration administration = new Administration();
-        assertFalse(administration.addToList(null));
+        assertFalse(administration.addMediaobjectToList(null));
     }
 
     @Test
-    void addToListPlusOne() throws UnsupportedAudioFileException, IOException {
+    void addValidMediaobjectToList () {
         Administration administration = new Administration();
-        AudioImpl audio = new AudioImpl();
+        UploaderImpl uploader = new UploaderImpl("TestUploader");
+        AudioImpl audio = new AudioImpl("Test", Collections.singleton(Tag.Animal), uploader);
+
+        administration.addUploaderToList(uploader);
+
+        assertTrue(administration.addMediaobjectToList(audio));
+    }
+
+    @Test
+    void addMediaobjectToListPlusOne() {
+        Administration administration = new Administration();
+        UploaderImpl uploader = new UploaderImpl("TestUploader");
+        AudioImpl audio = new AudioImpl("Test", Collections.singleton(Tag.Animal), uploader);
+        administration.addUploaderToList(uploader);
+
         int list1size  = administration.getAdministrationList().size();
 
-        administration.addToList(audio);
+        administration.addMediaobjectToList(audio);
 
         ArrayList<MediaObject> list2 = administration.getAdministrationList();
 
         assertEquals(list1size + 1, list2.size());
     }
 
+    //________________________MEDIAOBJECT_MAX_SIZE____________________________
+
     @Test
-    void addToListCheckExistingUploader() {
+    void checkMaxMediaSizeOversizedMedia() {
+        Administration administration = new Administration();
+        AudioImpl audio = mock(AudioImpl.class);
+
+        when(audio.getSize()).thenReturn(2L * 1024 * 1024 * 1024);
+
+        assertTrue(administration.checkMaxMediaSize(audio));
+    }
+
+    @Test
+    void addMediaobjectToListCheckExistingUploader() {
         Administration administration = new Administration();
         UploaderImpl uploader = new UploaderImpl("TestUploader");
         AudioImpl audio = new AudioImpl("Test", Collections.singleton(Tag.Animal), uploader);
 
-        administration.addToList(audio);
+        assertFalse(administration.checkIfMediaobjectBelongsToExistingUploader(audio));
     }
+
+    //________________________MEDIAOBJECTS_EXISTING_UPLOADER____________________________
+
+    @Test
+    void checkIfMediaobjectBelongsToExistingUploader() {
+        Administration administration = new Administration();
+        UploaderImpl uploader = new UploaderImpl("TestUploader");
+        AudioImpl audio = new AudioImpl("Test", Collections.singleton(Tag.Animal), uploader);
+
+        assertFalse(administration.addMediaobjectToList(audio));
+    }
+
+    //________________________MEDIAOBJECTS_UNIQUE_ADDRESS____________________________
+
+    @Test
+    void checkIfAddressIsUnique() {
+        Administration administration = new Administration();
+        UploaderImpl uploader = new UploaderImpl("TestUploader");
+        AudioImpl audio1 = new AudioImpl("Test", Collections.singleton(Tag.Animal), uploader);
+        administration.addUploaderToList(uploader);
+        administration.addMediaobjectToList(audio1);
+
+        AudioImpl audio2 = mock(AudioImpl.class);
+        when(audio2.getAddress()).thenReturn(audio1.getAddress());
+
+        assertTrue(administration.checkIfAddressIsUnique(audio2));
+    }
+
+    //________________________UPLOADER____________________________
+
+    @Test
+    void addUploaderToListNull() {
+        Administration administration = new Administration();
+        assertFalse(administration.addUploaderToList(null));
+    }
+
+    @Test
+    void addUploaderToListPlusOne() {
+        Administration administration = new Administration();
+        UploaderImpl uploader = new UploaderImpl("TestUploader");
+        int list1size  = administration.getUploaderList().size();
+        administration.addUploaderToList(uploader);
+
+
+        administration.addUploaderToList(uploader);
+
+        ArrayList<Uploader> list2 = administration.getUploaderList();
+
+        assertEquals(list1size + 1, list2.size());
+    }
+
+    @Test
+    void addUploaderWhichAlreadyExists() {
+        Administration administration = new Administration();
+        UploaderImpl uploader1 = new UploaderImpl("TestUploader");
+        administration.addUploaderToList(uploader1);
+
+        UploaderImpl uploader2 = new UploaderImpl("TestUploader");
+
+        assertFalse(administration.addUploaderToList(uploader2));
+    }
+
+    @Test
+    void checkIfUploaderAlreadyExistsUniqueUploader() {
+        Administration administration = new Administration();
+        UploaderImpl uploader = new UploaderImpl("TestUploader");
+        assertTrue(administration.addUploaderToList(uploader));
+    }
+
+    @Test
+    void checkIfUploaderAlreadyExistsDuplicate() {
+        Administration administration = new Administration();
+        UploaderImpl uploader1 = new UploaderImpl("TestUploader");
+        UploaderImpl uploader2 = new UploaderImpl("TestUploader");
+
+        administration.addUploaderToList(uploader1);
+
+        assertFalse(administration.addUploaderToList(uploader2));
+    }
+
+    //________________________LIST_ITEMS____________________________
 
     @Test
     void listItemsReturnsList() {
@@ -53,6 +160,7 @@ class AdministrationTest {
         assertNotNull(result);
     }
 
+    //________________________REMOVE_ITEMS____________________________
 
     @Test
     void removeNull() {
@@ -73,9 +181,11 @@ class AdministrationTest {
     @Test
     void removeListMinusOne() {
         Administration administration = new Administration();
-        AudioImpl audio = new AudioImpl();
+        UploaderImpl uploader = new UploaderImpl("TestUploader");
+        AudioImpl audio = new AudioImpl("Test", Collections.singleton(Tag.Animal), uploader);
+        administration.addUploaderToList(uploader);
 
-        administration.addToList(audio);
+        administration.addMediaobjectToList(audio);
         int list1size = administration.getAdministrationList().size();
 
         administration.remove(audio);
@@ -85,6 +195,7 @@ class AdministrationTest {
         assertEquals(list1size- 1, list2.size());
     }
 
+    //________________________UPDATE_MEDIAOBJECT____________________________
 
     @Test
     void updateNull() {

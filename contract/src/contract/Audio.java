@@ -4,5 +4,5 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 
 public interface Audio extends MediaContent,Uploadable{
-    int getSamplingRate() throws UnsupportedAudioFileException, IOException;
+    int getSamplingRate();
 }

@@ -7,5 +7,5 @@ public interface MediaContent {
     String getAddress();
     Collection<Tag> getTags();
     int getAccessCount();
-    long getSize() throws IOException;
+    long getSize();
 }
