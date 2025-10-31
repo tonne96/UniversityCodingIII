@@ -11,11 +11,11 @@ public class CLI {
         administration.addUploaderToList(mediaObject.getUploader());
         while (true) {
             System.out.println("""
-                Wählen Sie eine der folgenden Operationen:
-                :c Wechsel in den Einfügemodus
+                Waehlen Sie eine der folgenden Operationen:
+                :c Wechsel in den Einfuegemodus
                 :r Wechsel in den Anzeigemodus
-                :u Wechsel in den Änderungsmodus
-                :d Wechsel in den Löschmodus
+                :u Wechsel in den Aenderungsmodus
+                :d Wechsel in den Loeschmodus
                 :x beendet die Anwendung
                 """);
             String enteredValue = scanner.nextLine();
