@@ -32,8 +32,8 @@ public class CLI {
     public void listItems(List<MediaObject> mediaObjectList) {
         for (MediaObject m : mediaObjectList) {
             System.out.println(
-                    "Medientyp: " + m.getClass().getSimpleName()
-                    + " Uploader: " + m.getUploader().getName()
+                    "Medientyp: " + m.getClass().getSimpleName() + " |"
+                    + " Uploader: " + m.getUploader().getName() + " |"
                     + " Tag: " + m.getTags()
             );
         }

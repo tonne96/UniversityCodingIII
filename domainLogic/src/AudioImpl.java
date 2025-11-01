@@ -21,15 +21,18 @@ public class AudioImpl implements MediaObject, contract.Audio {
     public AudioImpl() {
     }
 
-    public AudioImpl(String title, Collection<Tag> tags, Uploader uploader) {
+    public AudioImpl(String title, int samplingRate, long size, BigDecimal cost, Collection<Tag> tags, Uploader uploader) {
+        Instant create = Instant.now();
         int indexNumber = index;
         indexNumber++;
         this.address = "media://" + "Audio/" + uploader.getName() + "/" + indexNumber + "/" + create.toString();
         this.title = title;
+        this.samplingRate = samplingRate;
         this.tags = tags;
+        this.size = size;
         this.uploader = uploader;
+        this.cost = cost;
     }
-
 
     public String getTitle() {
         return title;
@@ -80,8 +83,6 @@ public class AudioImpl implements MediaObject, contract.Audio {
     public void incrementAccessCounter() {
         accessCount++;
     }
-
-
 
     @Override
     public long getMaxSize() {
