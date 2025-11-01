@@ -19,6 +19,7 @@ class AdministrationTest {
     @Test
     void addMediaobjectToListNull() {
         Administration administration = new Administration();
+
         assertFalse(administration.addMediaobjectToList(null));
     }
 
@@ -47,6 +48,7 @@ class AdministrationTest {
         UploaderImpl uploader = new UploaderImpl("TestUploader");
 
         AudioImpl audio = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader);
+
         assertFalse(administration.addMediaobjectToList(audio));
     }
 
@@ -64,6 +66,7 @@ class AdministrationTest {
             @Override
             public String getAddress() {return audio1.getAddress(); }
         };
+
         assertFalse(administration.addMediaobjectToList(audio2));
     }
 
@@ -111,7 +114,9 @@ class AdministrationTest {
     void checkIfMediaobjectBelongsToExistingUploaderNotExisting() {
         Administration administration = new Administration();
         UploaderImpl uploader1 = new UploaderImpl("TestUploader");
+
         administration.addUploaderToList(uploader1);
+
         UploaderImpl uploader2 = new UploaderImpl("TestUploader2");
         AudioImpl audio = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader2);
 
@@ -123,6 +128,7 @@ class AdministrationTest {
     void checkIfMediaobjectBelongsToExistingUploaderExists() {
         Administration administration = new Administration();
         UploaderImpl uploader = new UploaderImpl("TestUploader");
+
         administration.addUploaderToList(uploader);
         AudioImpl audio = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader);
 
@@ -149,6 +155,7 @@ class AdministrationTest {
         Administration administration = new Administration();
         UploaderImpl uploader = new UploaderImpl("TestUploader");
         AudioImpl audio1 = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader);
+
         administration.addUploaderToList(uploader);
         administration.addMediaobjectToList(audio1);
 
@@ -165,6 +172,7 @@ class AdministrationTest {
         UploaderImpl uploader = new UploaderImpl("TestUploader");
         AudioImpl audio1 = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader);
         AudioImpl audio2 = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader);
+
         administration.addUploaderToList(uploader);
         administration.addMediaobjectToList(audio1);
 
@@ -177,6 +185,7 @@ class AdministrationTest {
     @Test
     void addUploaderToListNull() {
         Administration administration = new Administration();
+
         assertFalse(administration.addUploaderToList(null));
     }
 
@@ -212,6 +221,7 @@ class AdministrationTest {
     void checkIfUploaderAlreadyExistsEmptyList() {
         Administration administration = new Administration();
         UploaderImpl uploader = new UploaderImpl("TestUploader");
+
         assertFalse(administration.checkIfUploaderAlreadyExists(uploader));
     }
 
@@ -220,6 +230,7 @@ class AdministrationTest {
     void checkIfUploaderAlreadyExistsAlreadyInList() {
         Administration administration = new Administration();
         UploaderImpl uploader1 = new UploaderImpl("TestUploader");
+
         administration.addUploaderToList(uploader1);
         UploaderImpl uploader2 = new UploaderImpl("TestUploader");
 
@@ -231,6 +242,7 @@ class AdministrationTest {
     void checkIfUploaderAlreadyExistsNotInList() {
         Administration administration = new Administration();
         UploaderImpl uploader1 = new UploaderImpl("TestUploader");
+
         administration.addUploaderToList(uploader1);
         UploaderImpl uploader2 = new UploaderImpl("TestUploader2");
 
