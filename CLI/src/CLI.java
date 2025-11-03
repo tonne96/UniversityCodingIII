@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 public class CLI {
 
+    private final CLIEventHandler handler = new CLIEventHandler();
+
     public void start(MediaObject mediaObject, Administration administration) {
         Scanner scanner = new Scanner(System.in);
         administration.addUploaderToList(mediaObject.getUploader());
@@ -19,7 +21,11 @@ public class CLI {
                 """);
             String enteredValue = scanner.nextLine();
             switch (enteredValue) {
-                case ":c" : administration.addMediaobjectToList(mediaObject); break;
+                case ":c" : {
+                    administration.addMediaobjectToList(mediaObject); break;
+                    //CLIActionEvent actionEvent = new CLIActionEvent(mediaObject, ":c");
+                    //handler.fireEvent(actionEvent);
+                }
                 case ":r" : listItems(administration.getAdministrationList()); break;
                 case ":u" : administration.update(mediaObject); break;
                 case ":d" : administration.remove(mediaObject); break;

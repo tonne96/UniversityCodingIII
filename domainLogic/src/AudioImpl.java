@@ -21,7 +21,6 @@ public class AudioImpl implements MediaObject, contract.Audio, UniqueAddressCrea
     }
 
     public AudioImpl(Uploader uploader, Collection<Tag> tags, long size, BigDecimal cost, int samplingRate) {
-        Instant create = Instant.now();
         this.address = UniqueAddressCreator.createUniqueAddress() + "/type=Audio/uploader=" + uploader.getName() + "/tag=" + tags.toString() ;
         this.samplingRate = samplingRate;
         this.tags = tags;
