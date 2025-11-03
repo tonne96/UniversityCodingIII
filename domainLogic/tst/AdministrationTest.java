@@ -28,7 +28,7 @@ class AdministrationTest {
     void addMediaobjectToListPlusOne() {
         Administration administration = new Administration();
         UploaderImpl uploader = new UploaderImpl("TestUploader");
-        AudioImpl audio = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader);
+        AudioImpl audio = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
         administration.addUploaderToList(uploader);
 
         int list1size  = administration.getAdministrationList().size();
@@ -47,7 +47,7 @@ class AdministrationTest {
         Administration administration = new Administration();
         UploaderImpl uploader = new UploaderImpl("TestUploader");
 
-        AudioImpl audio = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader);
+        AudioImpl audio = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
 
         assertFalse(administration.addMediaobjectToList(audio));
     }
@@ -59,10 +59,11 @@ class AdministrationTest {
         UploaderImpl uploader = new UploaderImpl("TestUploader");
         administration.addUploaderToList(uploader);
 
-        AudioImpl audio1 = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader);
+        AudioImpl audio1 = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
         administration.addMediaobjectToList(audio1);
 
-        AudioImpl audio2 = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader) {
+        AudioImpl audio2 = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100) {
+
             @Override
             public String getAddress() {return audio1.getAddress(); }
         };
@@ -76,7 +77,7 @@ class AdministrationTest {
         Administration administration = new Administration();
         UploaderImpl uploader = new UploaderImpl("TestUploader");
         administration.addUploaderToList(uploader);
-        AudioImpl test = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader) {
+        AudioImpl test = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100) {
             @Override
             public long getSize() { return getMaxSize() + 1; }
         };
@@ -94,7 +95,7 @@ class AdministrationTest {
         long currentSize = audio.getSize();
         when(audio.getSize()).thenReturn(currentSize + 1);
 
-        assertTrue(administration.checkMaxMediaSize(audio));
+        assertFalse(administration.checkMaxMediaSize(audio));
     }
 
     //________________________MEDIAOBJECTS_EXISTING_UPLOADER____________________________
@@ -104,7 +105,7 @@ class AdministrationTest {
     void checkIfMediaobjectBelongsToExistingUploaderEmptyList() {
         Administration administration = new Administration();
         UploaderImpl uploader = new UploaderImpl("TestUploader");
-        AudioImpl audio = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader);
+        AudioImpl audio = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
 
         assertFalse(administration.checkIfMediaobjectBelongsToExistingUploader(audio));
     }
@@ -118,7 +119,7 @@ class AdministrationTest {
         administration.addUploaderToList(uploader1);
 
         UploaderImpl uploader2 = new UploaderImpl("TestUploader2");
-        AudioImpl audio = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader2);
+        AudioImpl audio = new AudioImpl(uploader2, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
 
         assertFalse(administration.checkIfMediaobjectBelongsToExistingUploader(audio));
     }
@@ -130,7 +131,7 @@ class AdministrationTest {
         UploaderImpl uploader = new UploaderImpl("TestUploader");
 
         administration.addUploaderToList(uploader);
-        AudioImpl audio = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader);
+        AudioImpl audio = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
 
         assertTrue(administration.checkIfMediaobjectBelongsToExistingUploader(audio));
     }
@@ -139,22 +140,12 @@ class AdministrationTest {
 
     //________________________MEDIAOBJECTS_UNIQUE_ADDRESS____________________________
 
-    // Liste ist leer
-    @Test
-    void checkIfAddressIsUniqueEmptyList() {
-        Administration administration = new Administration();
-        UploaderImpl uploader = new UploaderImpl("TestUploader");
-        AudioImpl audio = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader);
-
-        assertFalse(administration.checkIfAddressIsUnique(audio));
-    }
-
     // testet zwei Objekte mit gleicher Adresse
     @Test
     void checkIfAddressIsUniqueUniqueAddress() {
         Administration administration = new Administration();
         UploaderImpl uploader = new UploaderImpl("TestUploader");
-        AudioImpl audio1 = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader);
+        AudioImpl audio1 = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
 
         administration.addUploaderToList(uploader);
         administration.addMediaobjectToList(audio1);
@@ -162,7 +153,7 @@ class AdministrationTest {
         AudioImpl audio2 = mock(AudioImpl.class);
         when(audio2.getAddress()).thenReturn(audio1.getAddress());
 
-        assertTrue(administration.checkIfAddressIsUnique(audio2));
+        assertFalse(administration.checkIfAddressIsUnique(audio2));
     }
 
     // testet zwei Objekte mit ungleicher Adresse
@@ -170,13 +161,12 @@ class AdministrationTest {
     void checkIfAddressIsUniqueDifferentAddresses() {
         Administration administration = new Administration();
         UploaderImpl uploader = new UploaderImpl("TestUploader");
-        AudioImpl audio1 = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader);
-        AudioImpl audio2 = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader);
-
+        AudioImpl audio1 = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
+        AudioImpl audio2 = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
         administration.addUploaderToList(uploader);
         administration.addMediaobjectToList(audio1);
 
-        assertFalse(administration.checkIfAddressIsUnique(audio2));
+        assertTrue(administration.checkIfAddressIsUnique(audio2));
     }
 
     //________________________UPLOADER____________________________
@@ -287,7 +277,7 @@ class AdministrationTest {
     void removeListMinusOne() {
         Administration administration = new Administration();
         UploaderImpl uploader = new UploaderImpl("TestUploader");
-        AudioImpl audio = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader);
+        AudioImpl audio = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
         administration.addUploaderToList(uploader);
 
         administration.addMediaobjectToList(audio);

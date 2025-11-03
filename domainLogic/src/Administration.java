@@ -1,10 +1,7 @@
 import contract.MediaObject;
 import contract.Uploader;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Administration {
 
@@ -23,8 +20,8 @@ public class Administration {
     public boolean addMediaobjectToList(MediaObject mediaObject) {
         if (mediaObject != null
                 && checkIfMediaobjectBelongsToExistingUploader(mediaObject)
-                && !checkMaxMediaSize(mediaObject)
-                && !checkIfAddressIsUnique(mediaObject)) {
+                && checkMaxMediaSize(mediaObject)
+                && checkIfAddressIsUnique(mediaObject)) {
             administrationList.add(mediaObject);
             return true;
         }
@@ -55,14 +52,14 @@ public class Administration {
 
 
     public boolean checkMaxMediaSize (MediaObject mediaObject) {
-        return mediaObject.getSize() > mediaObject.getMaxSize();
+        return mediaObject.getSize() < mediaObject.getMaxSize();
     }
 
     public boolean checkIfAddressIsUnique(MediaObject mediaObject) {
         for (MediaObject m : administrationList) {
-            if (Objects.equals(mediaObject.getAddress(), m.getAddress())) return true;
+            if (Objects.equals(mediaObject.getAddress(), m.getAddress())) return false;
         }
-        return false;
+        return true;
     }
 
     public List<MediaObject> listItems() {

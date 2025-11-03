@@ -9,27 +9,20 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AudioImplTest {
 
-    @Test
-    void getTitle() {
-        UploaderImpl uploader = new UploaderImpl("TestUploader");
-        AudioImpl audio = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader);
-
-        assertEquals("Test", audio.getTitle());
-    }
 
     @Test
     void getSamplingRate() {
         UploaderImpl uploader = new UploaderImpl("TestUploader");
-        AudioImpl audio = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader);
+        AudioImpl audio = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
 
         assertEquals(44100, audio.getSamplingRate());
     }
 
     @Test
-    void getAddress() {
+    void getAddressIsUnique() {
         UploaderImpl uploader = new UploaderImpl("TestUploader");
-        AudioImpl audio1 = new AudioImpl("Test1", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader);
-        AudioImpl audio2 = new AudioImpl("Test2", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader);
+        AudioImpl audio1 = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
+        AudioImpl audio2 = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
 
         assertNotEquals(audio1.getAddress(), audio2.getAddress());
     }
@@ -37,7 +30,7 @@ class AudioImplTest {
     @Test
     void getTags() {
         UploaderImpl uploader = new UploaderImpl("TestUploader");
-        AudioImpl audio = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.emptyList(), uploader);
+        AudioImpl audio = new AudioImpl(uploader, Collections.emptyList(), 1024L, BigDecimal.valueOf(10), 44100);
 
         assertEquals(Collections.emptyList(), audio.getTags());
     }
@@ -53,7 +46,7 @@ class AudioImplTest {
     @Test
     void getSize() {
         UploaderImpl uploader = new UploaderImpl("TestUploader");
-        AudioImpl audio = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.emptyList(), uploader);
+        AudioImpl audio = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
 
         assertEquals(1024L, audio.getSize());
     }
@@ -61,7 +54,7 @@ class AudioImplTest {
     @Test
     void getUploader() {
         UploaderImpl uploader = new UploaderImpl("TestUploader");
-        AudioImpl audio = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader);
+        AudioImpl audio = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
 
         assertEquals(uploader, audio.getUploader());
     }
@@ -78,7 +71,7 @@ class AudioImplTest {
     @Test
     void getCost() {
         UploaderImpl uploader = new UploaderImpl("TestUploader");
-        AudioImpl audio = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader);
+        AudioImpl audio = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
 
         assertEquals(BigDecimal.valueOf(10), audio.getCost());
     }
@@ -86,7 +79,7 @@ class AudioImplTest {
     @Test
     void incrementAccessCounter() {
         UploaderImpl uploader = new UploaderImpl("TestUploader");
-        AudioImpl audio = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader);
+        AudioImpl audio = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
         int counter = audio.getAccessCount();
 
         audio.incrementAccessCounter();
@@ -97,7 +90,7 @@ class AudioImplTest {
     @Test
     void getMaxSize() {
         UploaderImpl uploader = new UploaderImpl("TestUploader");
-        AudioImpl audio = new AudioImpl("Test", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Animal), uploader);
+        AudioImpl audio = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
 
         assertTrue(audio.getMaxSize() > audio.getSize());
     }

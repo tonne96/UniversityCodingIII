@@ -6,9 +6,8 @@ import java.time.Instant;
 import java.util.Collection;
 
 
-public class AudioImpl implements MediaObject, contract.Audio {
+public class AudioImpl implements MediaObject, contract.Audio, UniqueAddressCreator {
     Instant create = Instant.now();
-    private String title;
     private int samplingRate;
     private String address;
     private Collection<Tag> tags;
@@ -21,21 +20,14 @@ public class AudioImpl implements MediaObject, contract.Audio {
     public AudioImpl() {
     }
 
-    public AudioImpl(String title, int samplingRate, long size, BigDecimal cost, Collection<Tag> tags, Uploader uploader) {
+    public AudioImpl(Uploader uploader, Collection<Tag> tags, long size, BigDecimal cost, int samplingRate) {
         Instant create = Instant.now();
-        int indexNumber = index;
-        indexNumber++;
-        this.address = "media://" + "Audio/" + uploader.getName() + "/" + indexNumber + "/" + create.toString();
-        this.title = title;
+        this.address = UniqueAddressCreator.createUniqueAddress() + "/type=Audio/uploader=" + uploader.getName() + "/tag=" + tags.toString() ;
         this.samplingRate = samplingRate;
         this.tags = tags;
         this.size = size;
         this.uploader = uploader;
         this.cost = cost;
-    }
-
-    public String getTitle() {
-        return title;
     }
 
     @Override

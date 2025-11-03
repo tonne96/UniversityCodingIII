@@ -5,8 +5,7 @@ import java.util.Scanner;
 
 public class CLI {
 
-    public void start(MediaObject mediaObject) {
-        Administration administration = new Administration();
+    public void start(MediaObject mediaObject, Administration administration) {
         Scanner scanner = new Scanner(System.in);
         administration.addUploaderToList(mediaObject.getUploader());
         while (true) {
@@ -25,6 +24,7 @@ public class CLI {
                 case ":u" : administration.update(mediaObject); break;
                 case ":d" : administration.remove(mediaObject); break;
                 case ":x" : System.exit(0); break;
+                default : System.out.println("Ungueltige Eingabe" + "\n");
             }
         }
     }

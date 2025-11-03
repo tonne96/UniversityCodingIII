@@ -6,8 +6,9 @@ import java.util.Collections;
 public class CLIMain {
     public static void main(String[] args) {
         CLI cli = new CLI();
+        Administration administration = new Administration();
         UploaderImpl uploader = new UploaderImpl("Uploader XYZ");
-        AudioImpl audio = new AudioImpl("Rocksong", 44100, 1024L, BigDecimal.valueOf(10),Collections.singleton(Tag.Music), uploader);
-        cli.start(audio);
+        AudioImpl audio = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
+        cli.start(audio, administration);
     }
 }
