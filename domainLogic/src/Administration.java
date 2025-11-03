@@ -7,13 +7,13 @@ public class Administration {
 
     // Liste wo alles drin gespeichert wird
     private final ArrayList<MediaObject> administrationList = new ArrayList<>();
-    private final ArrayList<Uploader> uploaderList = new ArrayList<>();
+    private final List<Uploader> uploaderList = new ArrayList<>();
 
-    public ArrayList<MediaObject> getAdministrationList() {
+    public List<MediaObject> getAdministrationList() {
         return administrationList;
     }
 
-    public ArrayList<Uploader> getUploaderList() {
+    public List<Uploader> getUploaderList() {
         return uploaderList;
     }
 

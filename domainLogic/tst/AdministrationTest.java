@@ -35,7 +35,7 @@ class AdministrationTest {
 
         administration.addMediaobjectToList(audio);
 
-        ArrayList<MediaObject> list2 = administration.getAdministrationList();
+        List<MediaObject> list2 = administration.getAdministrationList();
 
         assertEquals(list1size + 1, list2.size());
     }
@@ -189,7 +189,7 @@ class AdministrationTest {
 
         administration.addUploaderToList(uploader);
 
-        ArrayList<Uploader> list2 = administration.getUploaderList();
+        List<Uploader> list2 = administration.getUploaderList();
 
         assertEquals(list1size + 1, list2.size());
     }
@@ -285,7 +285,7 @@ class AdministrationTest {
 
         administration.remove(audio);
 
-        ArrayList<MediaObject> list2 = administration.getAdministrationList();
+        List<MediaObject> list2 = administration.getAdministrationList();
 
         assertEquals(list1size- 1, list2.size());
     }
