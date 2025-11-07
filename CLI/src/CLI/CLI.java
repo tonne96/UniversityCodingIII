@@ -1,3 +1,5 @@
+package CLI;
+
 import contract.MediaObject;
 import domainLogic.Administration;
 
@@ -22,14 +24,6 @@ public class CLI {
                 """);
             String enteredValue = scanner.nextLine();
             switch (enteredValue) {
-                case ":c" : {
-                    administration.addMediaobjectToList(mediaObject); break;
-                    //CLIActionEvent actionEvent = new CLIActionEvent(mediaObject, ":c");
-                    //handler.fireEvent(actionEvent);
-                }
-                case ":r" : listItems(administration.getAdministrationList()); break;
-                case ":u" : administration.update(mediaObject); break;
-                case ":d" : administration.remove(mediaObject); break;
                 case ":x" : System.exit(0); break;
                 default : System.out.println("Ungueltige Eingabe" + "\n");
             }

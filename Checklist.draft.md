@@ -18,8 +18,8 @@ Ergänzende Anmerkungen bitte immer _kursiv_ setzen. Andere Änderungen, außer 
 - [ ] kompilierbar
 - [ ] Trennung zwischen Test- und Produktiv-Code
 - [ ] geforderte main-Methoden nur im default package des Moduls belegProg3, nicht in den Submodulen
-  - [ ] CLI
-  - [ ] alternatives CLI
+  - [ ] CLI.CLI
+  - [ ] alternatives CLI.CLI
   - [ ] je eine für jede Simulation
   - [ ] GUI
   - [ ] Server
@@ -38,8 +38,8 @@ Ergänzende Anmerkungen bitte immer _kursiv_ setzen. Andere Änderungen, außer 
 - [ ] **Testqualität** (7)
 - [ ] **Testabdeckung GL inkl. Abhängigkeiten (100% additiv)** (7) _Abdeckung in Prozent angeben_
 - [ ] Testabdeckung Rest (jeweils 100% additiv) (6)
-  - [ ] Einfügen von Produzent*innen über das CLI _getestete Klassen angeben_
-  - [ ] Anzeigen von Produzent*innen über das CLI _getestete Klassen angeben_
+  - [ ] Einfügen von Produzent*innen über das CLI.CLI _getestete Klassen angeben_
+  - [ ] Anzeigen von Produzent*innen über das CLI.CLI _getestete Klassen angeben_
   - [ ] ein Beobachter _getestete Klassen angeben_
   - [ ] deterministische Funktionalität der Simulationen _getestete Klassen angeben_
   - [ ] Speichern via JOS oder JBP _getestete Klassen angeben_
@@ -54,21 +54,21 @@ Ergänzende Anmerkungen bitte immer _kursiv_ setzen. Andere Änderungen, außer 
 
 ## Basisfunktionalität (12)
 - [ ] **CRUD** (2)
-- [ ] **CLI** (2)
+- [ ] **CLI.CLI** (2)
   - Syntax gemäß Anforderungen
 - [ ] **Simulation** (2)
   - ohne race conditions
 - [ ] **GUI** (2)
 - [ ] **I/O** (2)
-  - in CLI oder GUI integriert
+  - in CLI.CLI oder GUI integriert
 - [ ] **Net** (2)
 
 ## Funktionalität (22)
 - [ ] vollständige GL (2)
 - [ ] threadsichere GL (1)
-- [ ] vollständiges CLI (1)
-- [ ] alternatives CLI (1)
-  - _hier oder im source code angeben welche Funktionalität im alternativen CLI deaktiviert_
+- [ ] vollständiges CLI.CLI (1)
+- [ ] alternatives CLI.CLI (1)
+  - _hier oder im source code angeben welche Funktionalität im alternativen CLI.CLI deaktiviert_
 - [ ] ausdifferenziertes event-System mit mindestens 3 events (2)
 - [ ] observer (2)
 - [ ] bzgl. den Anforderungen angemessene Typen der collections (2)

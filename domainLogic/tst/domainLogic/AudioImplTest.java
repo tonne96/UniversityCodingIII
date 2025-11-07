@@ -96,4 +96,13 @@ class AudioImplTest {
 
         assertTrue(audio.getMaxSize() > audio.getSize());
     }
+
+    @Test
+    void setAddress() {
+        AudioImpl audio = new AudioImpl();
+        String address = "Test";
+        audio.setAddress(address);
+
+        assertEquals("Test", audio.getAddress());
+    }
 }

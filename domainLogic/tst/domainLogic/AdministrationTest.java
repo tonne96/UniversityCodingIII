@@ -1,14 +1,17 @@
 package domainLogic;
 
+import contract.MediaContent;
 import contract.MediaObject;
 import contract.Tag;
 import contract.Uploader;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.engine.descriptor.MethodBasedTestDescriptor;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -19,10 +22,10 @@ class AdministrationTest {
 
     // Mediaobject ist null
     @Test
-    void addMediaobjectToListNull() {
+    void addMediaobjectToListNullUploaderNull() {
         Administration administration = new Administration();
 
-        assertFalse(administration.addMediaobjectToList(null));
+        assertFalse(administration.addMediaobjectToList(null, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100));
     }
 
     // nach hinzufuegen ist Liste um 1 gewachsen
@@ -30,14 +33,13 @@ class AdministrationTest {
     void addMediaobjectToListPlusOne() {
         Administration administration = new Administration();
         UploaderImpl uploader = new UploaderImpl("TestUploader");
-        AudioImpl audio = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
         administration.addUploaderToList(uploader);
 
-        int list1size  = administration.getAdministrationList().size();
+        int list1size = administration.listItems().size();
 
-        administration.addMediaobjectToList(audio);
+        administration.addMediaobjectToList(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
 
-        List<MediaObject> list2 = administration.getAdministrationList();
+        List<MediaContent> list2 = administration.listItems();
 
         assertEquals(list1size + 1, list2.size());
     }
@@ -49,42 +51,20 @@ class AdministrationTest {
         Administration administration = new Administration();
         UploaderImpl uploader = new UploaderImpl("TestUploader");
 
-        AudioImpl audio = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
 
-        assertFalse(administration.addMediaobjectToList(audio));
+        assertFalse(administration.addMediaobjectToList(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100));
     }
 
-    // Mediaobject hat gleiche Adresse
-    @Test
-    void addMediaobjectToListAddressNotUnique() {
-        Administration administration = new Administration();
-        UploaderImpl uploader = new UploaderImpl("TestUploader");
-        administration.addUploaderToList(uploader);
-
-        AudioImpl audio1 = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
-        administration.addMediaobjectToList(audio1);
-
-        AudioImpl audio2 = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100) {
-
-            @Override
-            public String getAddress() {return audio1.getAddress(); }
-        };
-
-        assertFalse(administration.addMediaobjectToList(audio2));
-    }
 
     // Mediaobject ist zu groß
     @Test
     void addMediaobjectToListFileToLarge() {
         Administration administration = new Administration();
         UploaderImpl uploader = new UploaderImpl("TestUploader");
+        MediaObject mediaObject = new AudioImpl();
         administration.addUploaderToList(uploader);
-        AudioImpl test = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100) {
-            @Override
-            public long getSize() { return getMaxSize() + 1; }
-        };
 
-        assertFalse(administration.addMediaobjectToList(test));
+        assertFalse(administration.addMediaobjectToList(uploader, Collections.singleton(Tag.Music), mediaObject.getMaxSize() + 1, BigDecimal.valueOf(10), 44100));
     }
 
     //________________________MEDIAOBJECT_MAX_SIZE____________________________
@@ -139,36 +119,33 @@ class AdministrationTest {
     }
 
 
-
     //________________________MEDIAOBJECTS_UNIQUE_ADDRESS____________________________
 
-    // testet zwei Objekte mit gleicher Adresse
+    // testet ob true wenn Adresse noch nicht vergeben
     @Test
-    void checkIfAddressIsUniqueUniqueAddress() {
+    void checkIfAddressIsUnique() {
         Administration administration = new Administration();
         UploaderImpl uploader = new UploaderImpl("TestUploader");
-        AudioImpl audio1 = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
-
+        MediaObject mediaObject = new AudioImpl();
         administration.addUploaderToList(uploader);
-        administration.addMediaobjectToList(audio1);
+        administration.addMediaobjectToList(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
 
-        AudioImpl audio2 = mock(AudioImpl.class);
-        when(audio2.getAddress()).thenReturn(audio1.getAddress());
-
-        assertFalse(administration.checkIfAddressIsUnique(audio2));
+        assertTrue(administration.checkIfAddressIsUnique(mediaObject));
     }
 
-    // testet zwei Objekte mit ungleicher Adresse
+    // testet false wenn Adresse schon vergeben
     @Test
     void checkIfAddressIsUniqueDifferentAddresses() {
         Administration administration = new Administration();
         UploaderImpl uploader = new UploaderImpl("TestUploader");
-        AudioImpl audio1 = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
-        AudioImpl audio2 = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
+        MediaObject mediaObject = new AudioImpl();
         administration.addUploaderToList(uploader);
-        administration.addMediaobjectToList(audio1);
+        administration.addMediaobjectToList(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
+        MediaContent mediaContent = administration.listItems().getFirst();
 
-        assertTrue(administration.checkIfAddressIsUnique(audio2));
+        mediaObject.setAddress(mediaContent.getAddress());
+
+        assertFalse(administration.checkIfAddressIsUnique(mediaObject));
     }
 
     //________________________UPLOADER____________________________
@@ -186,7 +163,7 @@ class AdministrationTest {
     void addUploaderToListPlusOne() {
         Administration administration = new Administration();
         UploaderImpl uploader = new UploaderImpl("TestUploader");
-        int list1size  = administration.getUploaderList().size();
+        int list1size = administration.getUploaderList().size();
         administration.addUploaderToList(uploader);
 
         administration.addUploaderToList(uploader);
@@ -257,21 +234,16 @@ class AdministrationTest {
 
     //________________________REMOVE_ITEMS____________________________
 
-    // liste ist null wenn entfernen
-    @Test
-    void removeNull() {
-        Administration administration = new Administration();
-
-        assertFalse(administration.remove(null));
-    }
 
     // Liste ist leer
     @Test
-    void removeEmptyList() {
+    void removeObjectNotInList() {
         Administration administration = new Administration();
-        AudioImpl audio = new AudioImpl();
+        UploaderImpl uploader = new UploaderImpl("TestUploader");
+        administration.addUploaderToList(uploader);
+        administration.addMediaobjectToList(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
 
-        assertFalse(administration.remove(audio));
+        assertFalse(administration.remove(""));
     }
 
     // check ob Liste kleiner wird nach remove
@@ -279,46 +251,42 @@ class AdministrationTest {
     void removeListMinusOne() {
         Administration administration = new Administration();
         UploaderImpl uploader = new UploaderImpl("TestUploader");
-        AudioImpl audio = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
-
         administration.addUploaderToList(uploader);
-        administration.addMediaobjectToList(audio);
+        administration.addMediaobjectToList(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
+        int listSizeBefore = administration.listItems().size();
 
-        int list1size = administration.getAdministrationList().size();
+        administration.remove(administration.listItems().getFirst().getAddress());
 
-        administration.remove(audio);
-
-        List<MediaObject> list2 = administration.getAdministrationList();
-
-        assertEquals(list1size- 1, list2.size());
+        assertEquals(listSizeBefore - 1, administration.listItems().size());
     }
 
     //________________________UPDATE_MEDIAOBJECT____________________________
 
-    // Mediaobject ist null
-    @Test
-    void updateNull() {
-        Administration administration = new Administration();
-
-        assertFalse(administration.update(null));
-    }
 
     // checkt ob counter erhöht wird
     @Test
     void updateAccessCounter() {
         Administration administration = new Administration();
         UploaderImpl uploader = new UploaderImpl("TestUploader");
-        AudioImpl audio = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
-        int mediaContentAccessCount1 = audio.getAccessCount();
-
         administration.addUploaderToList(uploader);
-        administration.addMediaobjectToList(audio);
+        administration.addMediaobjectToList(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
+        MediaContent mediaContent = administration.listItems().getFirst();
+        int counterBefore = mediaContent.getAccessCount();
 
-        administration.update(audio);
+        administration.update(mediaContent.getAddress());
 
-        int mediaContentAccessCount2 = audio.getAccessCount();
+        assertEquals(counterBefore + 1, mediaContent.getAccessCount());
+    }
 
-        assertEquals(mediaContentAccessCount1 + 1, mediaContentAccessCount2);
+    // Objekt ist nicht in Liste
+    @Test
+    void updateNotInList() {
+        Administration administration = new Administration();
+        UploaderImpl uploader = new UploaderImpl("TestUploader");
+        administration.addUploaderToList(uploader);
+        administration.addMediaobjectToList(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
+
+        assertFalse(administration.update(""));
     }
 
 

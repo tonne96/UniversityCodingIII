@@ -1,3 +1,5 @@
+package CLI;
+
 import contract.MediaObject;
 
 public class CLIActionEvent extends CLIEvent {
