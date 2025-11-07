@@ -1,4 +1,5 @@
 import contract.MediaObject;
+import domainLogic.Administration;
 
 import java.util.List;
 import java.util.Scanner;

@@ -1,6 +1,7 @@
+package domainLogic;
+
 import contract.MediaContent;
 import contract.MediaObject;
-import contract.UniqueAddressCreator;
 import contract.Uploader;
 
 import java.util.*;

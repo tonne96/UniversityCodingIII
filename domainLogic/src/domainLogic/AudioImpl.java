@@ -1,3 +1,5 @@
+package domainLogic;
+
 import contract.*;
 
 import java.math.BigDecimal;

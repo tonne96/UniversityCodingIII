@@ -1,3 +1,5 @@
+package domainLogic;
+
 import contract.MediaObject;
 import contract.Tag;
 import contract.Uploader;

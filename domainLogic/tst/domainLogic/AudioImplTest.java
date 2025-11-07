@@ -1,3 +1,5 @@
+package domainLogic;
+
 import contract.Tag;
 import org.junit.jupiter.api.Test;
 

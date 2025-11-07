@@ -1,4 +1,7 @@
 import contract.Tag;
+import domainLogic.Administration;
+import domainLogic.AudioImpl;
+import domainLogic.UploaderImpl;
 
 import java.math.BigDecimal;
 import java.util.Collections;

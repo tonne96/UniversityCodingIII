@@ -1,5 +1,5 @@
 # Übung 1
-Erstellen Sie die Geschäftslogik des Belegs prototypisch und testen Sie exemplarisch. Für die Übung müssen nicht alle Anforderungen realisiert werden aber mindestens CRUD d.h. Einfügen, Auflisten, Ändern (AccessCount) und Entfernen für mindestens einen Typ von den im Vertrag vordefinierten Medien, z.B. AudioImpl.
+Erstellen Sie die Geschäftslogik des Belegs prototypisch und testen Sie exemplarisch. Für die Übung müssen nicht alle Anforderungen realisiert werden aber mindestens CRUD d.h. Einfügen, Auflisten, Ändern (AccessCount) und Entfernen für mindestens einen Typ von den im Vertrag vordefinierten Medien, z.B. domainLogic.AudioImpl.
 
 Weitere Informationen stehen im Anforderungsdokument unter der Überschrift GL.
 
