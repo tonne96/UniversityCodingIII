@@ -1,7 +1,10 @@
+import contract.MediaContent;
 import contract.MediaObject;
+import contract.UniqueAddressCreator;
 import contract.Uploader;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Administration {
 
@@ -10,12 +13,20 @@ public class Administration {
     private final List<Uploader> uploaderList = new ArrayList<>();
 
     public List<MediaObject> getAdministrationList() {
-        return administrationList;
+        return new ArrayList<>(administrationList);
     }
 
     public List<Uploader> getUploaderList() {
         return uploaderList;
     }
+
+    private String createAddress() {
+        AtomicInteger index = new AtomicInteger(1);
+        int id = index.getAndIncrement();
+        return "media://ID=" + id;
+    }
+
+    // todo einfügenmethode mit übergebenen konstruktorwerten
 
     public boolean addMediaobjectToList(MediaObject mediaObject) {
         if (mediaObject != null
@@ -28,8 +39,9 @@ public class Administration {
         return false;
     }
 
+
     public boolean addUploaderToList(Uploader uploader) {
-        if (uploader != null && !checkIfUploaderAlreadyExists(uploader)) {
+        if (uploader != null && checkIfUploaderAlreadyExists(uploader)) {
             uploaderList.add(uploader);
             return true;
         }
@@ -38,9 +50,9 @@ public class Administration {
 
     public boolean checkIfUploaderAlreadyExists (Uploader uploader) {
         for (Uploader other : uploaderList) {
-            if (Objects.equals(other.getName(), uploader.getName())) return true;
+            if (Objects.equals(other.getName(), uploader.getName())) return false;
         }
-        return false;
+        return true;
     }
 
     public boolean checkIfMediaobjectBelongsToExistingUploader(MediaObject mediaObject) {
@@ -62,10 +74,8 @@ public class Administration {
         return true;
     }
 
-    public List<MediaObject> listItems() {
-        // gibt Liste zurück aber nicht veränderbar
-        // Quelle: https://www.geeksforgeeks.org/advance-java/collections-unmodifiablelist-method-in-java-with-examples/
-        return Collections.unmodifiableList(administrationList);
+    public List<MediaContent> listItems() {
+        return new ArrayList<>(administrationList);
     }
 
     public boolean remove(MediaObject mediaObject) {
@@ -77,7 +87,9 @@ public class Administration {
 
     public boolean update(MediaObject mediaObject) {
         if (mediaObject != null) {
-            mediaObject.incrementAccessCounter();
+            for (MediaObject m : administrationList) {
+                m.incrementAccessCount();
+            }
             return true;
         }
         return false;

@@ -212,7 +212,7 @@ class AdministrationTest {
         Administration administration = new Administration();
         UploaderImpl uploader = new UploaderImpl("TestUploader");
 
-        assertFalse(administration.checkIfUploaderAlreadyExists(uploader));
+        assertTrue(administration.checkIfUploaderAlreadyExists(uploader));
     }
 
     // Liste beinhaltet schon den Uploader
@@ -224,7 +224,7 @@ class AdministrationTest {
         administration.addUploaderToList(uploader1);
         UploaderImpl uploader2 = new UploaderImpl("TestUploader");
 
-        assertTrue(administration.checkIfUploaderAlreadyExists(uploader2));
+        assertFalse(administration.checkIfUploaderAlreadyExists(uploader2));
     }
 
     // Liste beinhaltet Uploader noch nicht und fuegt ein
@@ -236,7 +236,7 @@ class AdministrationTest {
         administration.addUploaderToList(uploader1);
         UploaderImpl uploader2 = new UploaderImpl("TestUploader2");
 
-        assertFalse(administration.checkIfUploaderAlreadyExists(uploader2));
+        assertTrue(administration.checkIfUploaderAlreadyExists(uploader2));
     }
 
     //________________________LIST_ITEMS____________________________
@@ -278,9 +278,10 @@ class AdministrationTest {
         Administration administration = new Administration();
         UploaderImpl uploader = new UploaderImpl("TestUploader");
         AudioImpl audio = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
-        administration.addUploaderToList(uploader);
 
+        administration.addUploaderToList(uploader);
         administration.addMediaobjectToList(audio);
+
         int list1size = administration.getAdministrationList().size();
 
         administration.remove(audio);
@@ -304,9 +305,12 @@ class AdministrationTest {
     @Test
     void updateAccessCounter() {
         Administration administration = new Administration();
-        AudioImpl audio = new AudioImpl();
-
+        UploaderImpl uploader = new UploaderImpl("TestUploader");
+        AudioImpl audio = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
         int mediaContentAccessCount1 = audio.getAccessCount();
+
+        administration.addUploaderToList(uploader);
+        administration.addMediaobjectToList(audio);
 
         administration.update(audio);
 

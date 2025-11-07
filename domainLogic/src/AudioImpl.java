@@ -70,13 +70,20 @@ public class AudioImpl implements MediaObject, contract.Audio, UniqueAddressCrea
         return cost;
     }
 
-    @Override
-    public void incrementAccessCounter() {
-        accessCount++;
-    }
 
     @Override
     public long getMaxSize() {
         return maxSize;
     }
+
+    @Override
+    public void incrementAccessCount() {
+        accessCount++;
+    }
+
+    @Override
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
 }

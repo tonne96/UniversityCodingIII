@@ -82,7 +82,7 @@ class AudioImplTest {
         AudioImpl audio = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
         int counter = audio.getAccessCount();
 
-        audio.incrementAccessCounter();
+        audio.incrementAccessCount();
 
         assertEquals(counter + 1, audio.getAccessCount());
     }
