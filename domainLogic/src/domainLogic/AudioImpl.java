@@ -8,7 +8,7 @@ import java.time.Instant;
 import java.util.Collection;
 
 
-public class AudioImpl implements MediaObject, contract.Audio, UniqueAddressCreator {
+public class AudioImpl implements MediaObject, contract.Audio {
     Instant create = Instant.now();
     private int samplingRate;
     private String address;
@@ -23,7 +23,6 @@ public class AudioImpl implements MediaObject, contract.Audio, UniqueAddressCrea
     }
 
     public AudioImpl(Uploader uploader, Collection<Tag> tags, long size, BigDecimal cost, int samplingRate) {
-        this.address = UniqueAddressCreator.createUniqueAddress() + "/type=Audio/uploader=" + uploader.getName() + "/tag=" + tags.toString() ;
         this.samplingRate = samplingRate;
         this.tags = tags;
         this.size = size;

@@ -8,6 +8,8 @@ import contract.Uploader;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 public class Administration {
     AtomicInteger index = new AtomicInteger(1);
@@ -15,6 +17,7 @@ public class Administration {
     // Liste wo alles drin gespeichert wird
     private final ArrayList<MediaObject> administrationList = new ArrayList<>();
     private final List<Uploader> uploaderList = new ArrayList<>();
+    private final Handler handler = new Handler("onMediaObjectDelete");
 
 
     public List<Uploader> getUploaderList() {
@@ -38,7 +41,9 @@ public class Administration {
     }
 
     public boolean isMediaObjectValid(MediaObject mediaObject) {
-        return checkIfMediaobjectBelongsToExistingUploader(mediaObject) && checkMaxMediaSize(mediaObject) && checkIfAddressIsUnique(mediaObject);
+        return checkIfMediaobjectBelongsToExistingUploader(mediaObject)
+                && checkMaxMediaSize(mediaObject)
+                && checkIfAddressIsUnique(mediaObject);
     }
 
 
@@ -84,6 +89,8 @@ public class Administration {
         for (MediaObject mediaObject : administrationList) {
             if (mediaObject.getAddress().equals(address)) {
                 administrationList.remove(mediaObject);
+                // handler = handlerlist.getByEvent("onMediaObjectDelete");
+                // handler.emit(MEDIA_OBJECT_DELETE, mediaobject.getAddress();
                 return true;
             }
         }
