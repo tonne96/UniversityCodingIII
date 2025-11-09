@@ -17,7 +17,7 @@ public class Administration {
     // Liste wo alles drin gespeichert wird
     private final ArrayList<MediaObject> administrationList = new ArrayList<>();
     private final List<Uploader> uploaderList = new ArrayList<>();
-    private final Handler handler = new Handler("onMediaObjectDelete");
+    // private final Handler handler = new Handler("onMediaObjectDelete");
 
 
     public List<Uploader> getUploaderList() {
