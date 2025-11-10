@@ -14,11 +14,4 @@ public class UploaderImpl implements Uploader {
         return name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof Uploader u) {
-            return u.getName().equals(this.name);
-        }
-        return false;
-    }
 }
