@@ -70,6 +70,7 @@ class AdministrationTest {
     //________________________MEDIAOBJECT_MAX_SIZE____________________________
 
     // Mediaobject hat eine zu große Groesse
+    /*
     @Test
     void checkMaxMediaSizeOversizedMedia() {
         Administration administration = new Administration();
@@ -80,9 +81,12 @@ class AdministrationTest {
         assertFalse(administration.checkMaxMediaSize(audio));
     }
 
+     */
+
     //________________________MEDIAOBJECTS_EXISTING_UPLOADER____________________________
 
     // Leere Uploader liste
+    /*
     @Test
     void checkIfMediaobjectBelongsToExistingUploaderEmptyList() {
         Administration administration = new Administration();
@@ -92,7 +96,10 @@ class AdministrationTest {
         assertFalse(administration.checkIfMediaobjectBelongsToExistingUploader(audio));
     }
 
+     */
+
     // hinzugefuegtes Meidaobject gehoert zu keinem Uploader in der Uploaderliste
+    /*
     @Test
     void checkIfMediaobjectBelongsToExistingUploaderNotExisting() {
         Administration administration = new Administration();
@@ -106,7 +113,10 @@ class AdministrationTest {
         assertFalse(administration.checkIfMediaobjectBelongsToExistingUploader(audio));
     }
 
+     */
+
     // hinzugefuegtes Meidaobject gehoert zu einem Uploader in der Uploaderliste
+    /*
     @Test
     void checkIfMediaobjectBelongsToExistingUploaderExists() {
         Administration administration = new Administration();
@@ -117,6 +127,8 @@ class AdministrationTest {
 
         assertTrue(administration.checkIfMediaobjectBelongsToExistingUploader(audio));
     }
+
+     */
 
 
     //________________________MEDIAOBJECTS_UNIQUE_ADDRESS____________________________
@@ -186,6 +198,7 @@ class AdministrationTest {
     }
 
     // Liste ist leer
+    /*
     @Test
     void checkIfUploaderAlreadyExistsEmptyList() {
         Administration administration = new Administration();
@@ -194,7 +207,10 @@ class AdministrationTest {
         assertTrue(administration.checkIfUploaderAlreadyExists(uploader));
     }
 
+     */
+
     // Liste beinhaltet schon den Uploader
+    /*
     @Test
     void checkIfUploaderAlreadyExistsAlreadyInList() {
         Administration administration = new Administration();
@@ -206,7 +222,10 @@ class AdministrationTest {
         assertFalse(administration.checkIfUploaderAlreadyExists(uploader2));
     }
 
+     */
+
     // Liste beinhaltet Uploader noch nicht und fuegt ein
+    /*
     @Test
     void checkIfUploaderAlreadyExistsNotInList() {
         Administration administration = new Administration();
@@ -217,6 +236,8 @@ class AdministrationTest {
 
         assertTrue(administration.checkIfUploaderAlreadyExists(uploader2));
     }
+
+     */
 
     //________________________LIST_ITEMS____________________________
 

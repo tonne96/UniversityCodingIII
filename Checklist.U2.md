@@ -32,12 +32,12 @@ Flüchtige Quellen, wie LLMs, sind per screen shot zu dokumentieren.
 - [ ] CLI.CLI-Implementierung für CRUD für einen Typ
 - [ ] Dokumentation des Befehlssatzes inkl. Beispiele, falls abweichend zu Anforderungsdokument
 
-### 1 einfaches event system
-- [ ] event-System für die Kommunikation vom CLI.CLI zur GL realisiert
+### 1 einfaches addEvent system
+- [ ] addEvent-System für die Kommunikation vom CLI.CLI zur GL realisiert
 
 ### 2 Beobachtermuster
 - [ ] ein Beobachter gemäß Anforderungen realisiert
 
-### 3 erweitertes event system
+### 3 erweitertes addEvent system
 abhängig von 1
-- [ ] event-System für die Kommunikation von der GL zum CLI.CLI realisiert
+- [ ] addEvent-System für die Kommunikation von der GL zum CLI.CLI realisiert

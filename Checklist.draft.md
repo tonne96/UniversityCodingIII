@@ -69,7 +69,7 @@ Ergänzende Anmerkungen bitte immer _kursiv_ setzen. Andere Änderungen, außer 
 - [ ] vollständiges CLI.CLI (1)
 - [ ] alternatives CLI.CLI (1)
   - _hier oder im source code angeben welche Funktionalität im alternativen CLI.CLI deaktiviert_
-- [ ] ausdifferenziertes event-System mit mindestens 3 events (2)
+- [ ] ausdifferenziertes addEvent-System mit mindestens 3 events (2)
 - [ ] observer (2)
 - [ ] bzgl. den Anforderungen angemessene Typen der collections (2)
 - [ ] Simulation 2 (1)

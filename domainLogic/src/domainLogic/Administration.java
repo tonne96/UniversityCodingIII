@@ -40,7 +40,7 @@ public class Administration {
         return false;
     }
 
-    public boolean isMediaObjectValid(MediaObject mediaObject) {
+    private boolean isMediaObjectValid(MediaObject mediaObject) {
         return checkIfMediaobjectBelongsToExistingUploader(mediaObject)
                 && checkMaxMediaSize(mediaObject)
                 && checkIfAddressIsUnique(mediaObject);
@@ -55,14 +55,14 @@ public class Administration {
         return false;
     }
 
-    public boolean checkIfUploaderAlreadyExists(Uploader uploader) {
+    private boolean checkIfUploaderAlreadyExists(Uploader uploader) {
         for (Uploader other : uploaderList) {
             if (Objects.equals(other.getName(), uploader.getName())) return false;
         }
         return true;
     }
 
-    public boolean checkIfMediaobjectBelongsToExistingUploader(MediaObject mediaObject) {
+    private boolean checkIfMediaobjectBelongsToExistingUploader(MediaObject mediaObject) {
         for (Uploader uploader : uploaderList) {
             if (Objects.equals(mediaObject.getUploader().getName(), uploader.getName())) return true;
         }
@@ -70,7 +70,7 @@ public class Administration {
     }
 
 
-    public boolean checkMaxMediaSize(MediaObject mediaObject) {
+    private boolean checkMaxMediaSize(MediaObject mediaObject) {
         return mediaObject.getSize() < mediaObject.getMaxSize();
     }
 

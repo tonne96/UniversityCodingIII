@@ -1,38 +1,48 @@
 package CLI;
 
-import CLI.CLIListener.AddListener;
-import contract.MediaObject;
-import contract.Tag;
-import contract.Uploader;
-import domainLogic.Administration;
-import domainLogic.UploaderImpl;
+import domainLogic.eventSystem.events.AddEvent;
+import domainLogic.eventSystem.events.ListEvent;
+import domainLogic.eventSystem.events.UpdateEvent;
+import domainLogic.eventSystem.handler.*;
+import domainLogic.eventSystem.events.RemoveEvent;
 
-import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.Scanner;
 
 public class CLI {
 
     // erstellt Eventobjekt welches zum Typ der Eingabe passt mit Informationen hinterlegt
     // hat Handler für verschiedene CRUD
-    // übergibt Event an passenden Handler
+    // übergibt AddEvent an passenden Handler
+    // verschiedene Eventtypen für CRUD
+    /*
+    4 Events für CRUD
 
-    private Handler addHandler, listHandler, removeHandler, updateHandler;
+    4 Handler für CRUD
+    4 Listener für CRUD
+    Main
+    create Handler, AddEvent, Listener
+    setHandlers
+    Listener bekommen ein Administrationsmodel welches in der Main instanziert wird
+     */
 
-    public void setAddHandler(Handler handler) {
-        this.addHandler = handler;
+    private AddHandler addHandler;
+    private ListHandler listHandler;
+    private RemoveHandler removeHandler;
+    private UpdateHandler updateHandler;
+
+    public void setAddHandler(AddHandler addHandler) {
+        this.addHandler = addHandler;
     }
-    public void setListHandler(Handler handler) {
-        this.listHandler = handler;
+    public void setListHandler(ListHandler listHandler) {
+        this.listHandler = listHandler;
     }
-    public void setRemoveHandler(Handler handler) {
-        this.removeHandler = handler;
+    public void setRemoveHandler(RemoveHandler removeHandler) {
+        this.removeHandler = removeHandler;
     }
-    public void setUpdateHandler(Handler handler) {
-        this.updateHandler = handler;
+    public void setUpdateHandler(UpdateHandler updateHandler) {
+        this.updateHandler = updateHandler;
     }
+
 
     public void start() {
         Scanner scanner = new Scanner(System.in);
@@ -46,18 +56,27 @@ public class CLI {
                 :x beendet die Anwendung
                 """);
             String enteredValue = scanner.nextLine();
-            Event event = new Event(this, new UploaderImpl("TestUploader"), Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
             switch (enteredValue) {
-                case ":c" : if (this.addHandler != null) {
-                    addHandler.handle(event);
-                } break;
-                case ":r" : if (this.listHandler != null) listHandler.handle(event); break;
-                case ":u" : if (this.updateHandler != null) updateHandler.handle(event); break;
-                case ":d" : if (this.removeHandler != null) removeHandler.handle(event); break;
+                case ":c" : if (this.addHandler != null) addHandler.handle(new AddEvent(this,"Test")); break;
+                case ":r" : if (this.listHandler != null) listHandler.handle(new ListEvent(this, "Test")); break;
+                case ":u" : if (this.updateHandler != null) updateHandler.handle(new UpdateEvent(this, "Test")); break;
+                case ":d" : if (this.removeHandler != null) removeHandler.handle(new RemoveEvent(this, "Address")); break;
                 case ":x" : System.exit(0); break;
                 default : System.out.println("Ungueltige Eingabe" + "\n");
             }
         }
+    }
+
+
+    /*
+    public AddEvent handleTextInput(String string) {
+        switch (string) {
+            case ":c":
+                return new AddEvent(this,"onMediaItemAdd");
+            default:
+                System.out.println("Ungueltige Eingabe" + "\n");
+        }
+        return new AddEvent(this,"onWrongInput");
     }
 
     public void listItems(List<MediaObject> mediaObjectList) {
@@ -69,4 +88,6 @@ public class CLI {
             );
         }
     }
+
+     */
 }
