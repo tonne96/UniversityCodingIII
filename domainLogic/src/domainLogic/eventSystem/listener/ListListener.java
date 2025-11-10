@@ -13,9 +13,6 @@ public class ListListener implements EventListener<ListEvent> {
         this.administration = administration;
     }
 
-// kennt AddEvent SOurce CLI nicht
-    // kennt Administration und führt CRUD aus
-
     @Override
     public void onEvent(ListEvent listEvent) {
         List<MediaContent> mediaObjectList = this.administration.listItems();

@@ -1,14 +1,12 @@
 package CLI;
 
-import domainLogic.eventSystem.events.AddEvent;
-import domainLogic.eventSystem.events.ListEvent;
-import domainLogic.eventSystem.events.UpdateEvent;
+import domainLogic.eventSystem.events.*;
 import domainLogic.eventSystem.handler.*;
-import domainLogic.eventSystem.events.RemoveEvent;
+import domainLogic.eventSystem.listener.FeedbackListener;
 
 import java.util.Scanner;
 
-public class CLI {
+public class CLI implements FeedbackListener {
 
 
     /*
@@ -48,7 +46,7 @@ public class CLI {
     public void start() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("""
+            System.out.println(""" 
                 Waehlen Sie eine der folgenden Operationen:
                 :c Wechsel in den Einfuegemodus
                 :r Wechsel in den Anzeigemodus
@@ -58,13 +56,18 @@ public class CLI {
                 """);
             String enteredValue = scanner.nextLine();
             switch (enteredValue) {
-                case ":c" : if (this.addHandler != null) addHandler.handle(new AddEvent(this)); break;
-                case ":r" : if (this.listHandler != null) listHandler.handle(new ListEvent(this)); break;
-                case ":u" : if (this.updateHandler != null) updateHandler.handle(new UpdateEvent(this, "media://ID=1")); break;
-                case ":d" : if (this.removeHandler != null) removeHandler.handle(new RemoveEvent(this, "media://ID=1")); break;
-                case ":x" : System.exit(0); break;
-                default : System.out.println("Ungueltige Eingabe" + "\n");
+                case ":c" -> addHandler.handle(new AddEvent(this));
+                case ":r" -> listHandler.handle(new ListEvent(this));
+                case ":u" -> updateHandler.handle(new UpdateEvent(this, "media://ID=1"));
+                case ":d" -> removeHandler.handle(new RemoveEvent(this, "media://ID=1"));
+                case ":x" -> System.exit(0);
+                default -> System.out.println("Ungueltige Eingabe" + "\n");
             }
         }
+    }
+
+    @Override
+    public void onFeedback(FeedbackEvent feedbackEvent) {
+        System.out.println("Administration meldet: "+ feedbackEvent.getFeedbackMessage());
     }
 }

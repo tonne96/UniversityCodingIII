@@ -8,7 +8,8 @@ import java.util.List;
 
 public class AddHandler {
 
-    private List<AddListener> listenerList = new LinkedList<>();
+    private final List<AddListener> listenerList = new LinkedList<>();
+
 
     public void addListener(AddListener listener) {
         this.listenerList.add(listener);

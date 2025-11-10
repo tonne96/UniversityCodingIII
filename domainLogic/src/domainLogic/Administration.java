@@ -4,21 +4,35 @@ import contract.MediaContent;
 import contract.MediaObject;
 import contract.Tag;
 import contract.Uploader;
+import domainLogic.eventSystem.events.FeedbackEvent;
+import domainLogic.eventSystem.listener.FeedbackListener;
 
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 public class Administration {
     AtomicInteger index = new AtomicInteger(1);
 
-    // Liste wo alles drin gespeichert wird
+
     private final ArrayList<MediaObject> administrationList = new ArrayList<>();
     private final List<Uploader> uploaderList = new ArrayList<>();
-    // private final Handler handler = new Handler("onMediaObjectDelete");
+    private final List<FeedbackListener> feedbackListenersList = new ArrayList<>();
 
+    public void addFeedbackListener(FeedbackListener listener) {
+        feedbackListenersList.add(listener);
+    }
+
+    public void removeFeedbackListener(FeedbackListener listener) {
+        feedbackListenersList.remove(listener);
+    }
+
+    private void notifyFeedbackListeners(String message) {
+        FeedbackEvent event = new FeedbackEvent(this, message);
+        for (FeedbackListener l : feedbackListenersList) {
+            l.onFeedback(event);
+        }
+    }
 
     public List<Uploader> getUploaderList() {
         return new ArrayList<>(uploaderList);
@@ -35,9 +49,12 @@ public class Administration {
         mediaObject.setAddress(createAddress());
         if (isMediaObjectValid(mediaObject)) {
             administrationList.add(mediaObject);
+            notifyFeedbackListeners("Mediaobjekt hinzugefügt");
             return true;
+        } else {
+            notifyFeedbackListeners("Mediaobjekt nicht hinzugefügt");
+            return false;
         }
-        return false;
     }
 
     private boolean isMediaObjectValid(MediaObject mediaObject) {
@@ -89,11 +106,11 @@ public class Administration {
         for (MediaObject mediaObject : administrationList) {
             if (mediaObject.getAddress().equals(address)) {
                 administrationList.remove(mediaObject);
-                // handler = handlerlist.getByEvent("onMediaObjectDelete");
-                // handler.emit(MEDIA_OBJECT_DELETE, mediaobject.getAddress();
+                notifyFeedbackListeners("Mediaobjekt erfolgreich gelöscht");
                 return true;
             }
         }
+        notifyFeedbackListeners("Meidaobjekt konnte nicht gelöscht werden");
         return false;
     }
 
@@ -101,9 +118,11 @@ public class Administration {
         for (MediaObject mediaObject : administrationList) {
             if (mediaObject.getAddress().equals(address)) {
                 mediaObject.incrementAccessCount();
+                notifyFeedbackListeners("Mediaobjekt erfolgreich geupdatet");
                 return true;
             }
         }
+        notifyFeedbackListeners("Mediaobjekt konnte nicht geupdatet werden");
         return false;
     }
 }

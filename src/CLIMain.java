@@ -41,6 +41,8 @@ public class CLIMain {
         cli.setRemoveHandler(removeHandler);
         cli.setUpdateHandler(updateHandler);
 
+        administration.addFeedbackListener(cli);
+
         // start controller
         cli.start();
     }
