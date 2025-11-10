@@ -3,7 +3,7 @@ package domainLogic.eventSystem.events;
 import java.util.EventObject;
 
 public class RemoveEvent extends EventObject {
-    private final String command;
+    private final String address;
 
     /**
      * Constructs a prototypical Event.
@@ -11,12 +11,12 @@ public class RemoveEvent extends EventObject {
      * @param source the object on which the Event initially occurred
      * @throws IllegalArgumentException if source is null
      */
-    public RemoveEvent(Object source, String command) {
+    public RemoveEvent(Object source, String address) {
         super(source);
-        this.command = command;
+        this.address = address;
     }
 
-    public String getCommand() {
-        return command;
+    public String getAddress() {
+        return address;
     }
 }

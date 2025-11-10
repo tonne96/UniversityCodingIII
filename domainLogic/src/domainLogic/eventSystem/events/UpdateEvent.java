@@ -3,14 +3,14 @@ package domainLogic.eventSystem.events;
 import java.util.EventObject;
 
 public class UpdateEvent extends EventObject {
-    private final String command;
+    private final String address;
 
-    public UpdateEvent(Object source, String command) {
+    public UpdateEvent(Object source, String address) {
         super(source);
-        this.command = command;
+        this.address = address;
     }
 
-    public String getCommand() {
-        return command;
+    public String getAddress() {
+        return address;
     }
 }

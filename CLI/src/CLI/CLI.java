@@ -10,13 +10,14 @@ import java.util.Scanner;
 
 public class CLI {
 
-    // erstellt Eventobjekt welches zum Typ der Eingabe passt mit Informationen hinterlegt
-    // hat Handler für verschiedene CRUD
-    // übergibt AddEvent an passenden Handler
-    // verschiedene Eventtypen für CRUD
-    /*
-    4 Events für CRUD
 
+    /*
+    todo
+    erstellt Eventobjekt welches zum Typ der Eingabe passt mit Informationen hinterlegt
+    hat Handler für verschiedene CRUD
+    übergibt AddEvent an passenden Handler
+    verschiedene Eventtypen für CRUD
+    4 Events für CRUD
     4 Handler für CRUD
     4 Listener für CRUD
     Main
@@ -57,37 +58,13 @@ public class CLI {
                 """);
             String enteredValue = scanner.nextLine();
             switch (enteredValue) {
-                case ":c" : if (this.addHandler != null) addHandler.handle(new AddEvent(this,"Test")); break;
-                case ":r" : if (this.listHandler != null) listHandler.handle(new ListEvent(this, "Test")); break;
-                case ":u" : if (this.updateHandler != null) updateHandler.handle(new UpdateEvent(this, "Test")); break;
-                case ":d" : if (this.removeHandler != null) removeHandler.handle(new RemoveEvent(this, "Address")); break;
+                case ":c" : if (this.addHandler != null) addHandler.handle(new AddEvent(this)); break;
+                case ":r" : if (this.listHandler != null) listHandler.handle(new ListEvent(this)); break;
+                case ":u" : if (this.updateHandler != null) updateHandler.handle(new UpdateEvent(this, "media://ID=1")); break;
+                case ":d" : if (this.removeHandler != null) removeHandler.handle(new RemoveEvent(this, "media://ID=1")); break;
                 case ":x" : System.exit(0); break;
                 default : System.out.println("Ungueltige Eingabe" + "\n");
             }
         }
     }
-
-
-    /*
-    public AddEvent handleTextInput(String string) {
-        switch (string) {
-            case ":c":
-                return new AddEvent(this,"onMediaItemAdd");
-            default:
-                System.out.println("Ungueltige Eingabe" + "\n");
-        }
-        return new AddEvent(this,"onWrongInput");
-    }
-
-    public void listItems(List<MediaObject> mediaObjectList) {
-        for (MediaObject m : mediaObjectList) {
-            System.out.println(
-                    "Medientyp: " + m.getClass().getSimpleName() + " |"
-                    + " Uploader: " + m.getUploader().getName() + " |"
-                    + " Tag: " + m.getTags()
-            );
-        }
-    }
-
-     */
 }

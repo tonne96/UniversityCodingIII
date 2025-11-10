@@ -12,7 +12,7 @@ public class RemoveListener implements EventListener<RemoveEvent> {
 
     @Override
     public void onEvent(RemoveEvent removeEvent) {
-        this.administration.remove(removeEvent.getCommand());
+        this.administration.remove(removeEvent.getAddress());
 
     }
 }

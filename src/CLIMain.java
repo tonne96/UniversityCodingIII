@@ -11,7 +11,7 @@ import domainLogic.eventSystem.listener.UpdateListener;
 
 public class CLIMain {
     public static void main(String[] args) {
-        // create Model
+        // create model
         Administration administration = new Administration();
 
         // create controller
@@ -23,7 +23,7 @@ public class CLIMain {
         RemoveHandler removeHandler = new RemoveHandler();
         UpdateHandler updateHandler = new UpdateHandler();
 
-        // create Listener
+        // create listener
         AddListener addListener = new AddListener(administration);
         ListListener listListener = new ListListener(administration);
         RemoveListener removeListener = new RemoveListener(administration);
@@ -41,7 +41,7 @@ public class CLIMain {
         cli.setRemoveHandler(removeHandler);
         cli.setUpdateHandler(updateHandler);
 
-
+        // start controller
         cli.start();
     }
 }

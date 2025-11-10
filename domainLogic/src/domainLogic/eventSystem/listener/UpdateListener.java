@@ -11,7 +11,7 @@ public class UpdateListener implements EventListener<UpdateEvent> {
     }
 
     public void onEvent(UpdateEvent updateEvent) {
-        this.administration.update(updateEvent.getCommand());
+        this.administration.update(updateEvent.getAddress());
     }
 
 }

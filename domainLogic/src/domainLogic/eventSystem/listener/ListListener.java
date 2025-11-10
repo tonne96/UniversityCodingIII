@@ -21,6 +21,7 @@ public class ListListener implements EventListener<ListEvent> {
         List<MediaContent> mediaObjectList = this.administration.listItems();
         for (MediaContent m : mediaObjectList) {
             System.out.println(
+                    "Adresse: " + m.getAddress() + " | " +
                     "Medientyp: " + m.getClass().getSimpleName() + " |"
                             + " Tag: " + m.getTags()
             );
