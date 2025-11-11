@@ -44,6 +44,7 @@ class AdministrationTest {
         assertEquals(list1size + 1, list2.size());
     }
 
+    /*
     @Test
     void addFeedbackListener() {
         Administration administration = new Administration();
@@ -59,6 +60,9 @@ class AdministrationTest {
         assertEquals(lengthBefore + 1, administration.getFeedbackListenersList().size());
     }
 
+     */
+
+    /*
     @Test
     void removeFeedbackListener() {
         Administration administration = new Administration();
@@ -76,6 +80,9 @@ class AdministrationTest {
         assertEquals(lengthBefore - 1, administration.getFeedbackListenersList().size());
     }
 
+     */
+
+    /*
     @Test
     public void testNotifyFeedbackListeners() {
         Administration admin = new Administration();
@@ -94,6 +101,8 @@ class AdministrationTest {
 
         verify(mockListener, times(1)).onFeedback(any(FeedbackEvent.class));
     }
+
+     */
 
     // Mediaobject gehoert zu nicht bekannten Uploader
     @Test

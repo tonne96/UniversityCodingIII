@@ -1,13 +1,8 @@
 import CLI.CLI;
+import CLI.eventSystem.handler.*;
+import CLI.eventSystem.listener.*;
+import CLI.eventSystem.observer.AdministrationObserver;
 import domainLogic.Administration;
-import CLI.eventSystem.handler.AddHandler;
-import CLI.eventSystem.handler.ListHandler;
-import CLI.eventSystem.handler.RemoveHandler;
-import CLI.eventSystem.handler.UpdateHandler;
-import CLI.eventSystem.listener.AddListener;
-import CLI.eventSystem.listener.ListListener;
-import CLI.eventSystem.listener.RemoveListener;
-import CLI.eventSystem.listener.UpdateListener;
 
 public class CLIMain {
     public static void main(String[] args) {
@@ -18,31 +13,54 @@ public class CLIMain {
         CLI cli = new CLI();
 
         // create handler
-        AddHandler addHandler = new AddHandler();
+        AddMediaobjectHandler addMediaobjectHandler = new AddMediaobjectHandler();
+        AddUploaderHandler addUploaderHandler = new AddUploaderHandler();
         ListHandler listHandler = new ListHandler();
         RemoveHandler removeHandler = new RemoveHandler();
         UpdateHandler updateHandler = new UpdateHandler();
 
         // create listener
-        AddListener addListener = new AddListener(administration);
+        AddMediaobjectListener addMediaobjectListener = new AddMediaobjectListener(administration);
+        AddUploaderListener addUploaderListener = new AddUploaderListener(administration);
         ListListener listListener = new ListListener(administration);
         RemoveListener removeListener = new RemoveListener(administration);
         UpdateListener updateListener = new UpdateListener(administration);
 
         // add listeners
-        addHandler.addListener(addListener);
+        addMediaobjectHandler.addListener(addMediaobjectListener);
+        addUploaderHandler.addListener(addUploaderListener);
         listHandler.addListener(listListener);
         removeHandler.addListener(removeListener);
         updateHandler.addListener(updateListener);
 
         // set models
-        cli.setAddHandler(addHandler);
+        cli.setAddMediaobjectHandler(addMediaobjectHandler);
+        cli.setUploaderHandler(addUploaderHandler);
         cli.setListHandler(listHandler);
         cli.setRemoveHandler(removeHandler);
         cli.setUpdateHandler(updateHandler);
 
-        // add cli to feedbacklistener from administration
-        administration.addFeedbackListener(cli);
+        // create Feebacklistener
+        FeedbackListener CLIfeedbackListener = new FeedbackListener(cli);
+        FeedbackListener adminFeedbackListener = new FeedbackListener(administration);
+
+        // create Feedbackhandler
+        FeedbackHandler adminFeedbackHandler = new FeedbackHandler();
+        FeedbackHandler CLIfeedbackHandler = new FeedbackHandler();
+
+        // add FeedbackListeners
+        adminFeedbackHandler.addListener(adminFeedbackListener);
+        CLIfeedbackHandler.addListener(CLIfeedbackListener);
+
+        // set FeedbackHandlers
+        administration.setFeedbackHandler(adminFeedbackHandler);
+        cli.setFeedbackHandler(CLIfeedbackHandler);;
+
+        // create observer für administration
+        AdministrationObserver administrationObserver = new AdministrationObserver(administration);
+
+        // attach observer
+        administration.attachObserver(administrationObserver);
 
         // start controller
         cli.start();

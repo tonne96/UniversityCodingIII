@@ -1,7 +1,9 @@
 package domainLogic;
 
 import CLI.eventSystem.events.FeedbackEvent;
-import CLI.eventSystem.listener.FeedbackListener;
+import CLI.eventSystem.handler.FeedbackHandler;
+import CLI.eventSystem.observer.Observable;
+import CLI.eventSystem.observer.Observer;
 import contract.MediaContent;
 import contract.MediaObject;
 import contract.Tag;
@@ -12,33 +14,41 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Administration {
+public class Administration implements Model, Observable {
     AtomicInteger index = new AtomicInteger(1);
-
-
     private final ArrayList<MediaObject> administrationList = new ArrayList<>();
     private final List<Uploader> uploaderList = new ArrayList<>();
-    private final List<FeedbackListener> feedbackListenersList = new ArrayList<>();
+    private FeedbackHandler feedbackHandler;
+    private final List<Observer> observerList = new LinkedList<>();
+    String status;
+
+    @Override
+    public void attachObserver(Observer o) {
+        this.observerList.add(o);
+    }
+
+    @Override
+    public void detachObserver(Observer o) {
+        this.observerList.remove(o);
+    }
+
+    @Override
+    public void notifyObservers(String status) {
+        this.status = status;
+        for (Observer observer : observerList) {
+            observer.update();
+        }
+    }
+
+    public String getStatus() {
+        return status;
+    }
 
     // ___________________Feedbacklistener________________________
 
-    public void addFeedbackListener(FeedbackListener listener) {
-        feedbackListenersList.add(listener);
-    }
 
-    public void removeFeedbackListener(FeedbackListener listener) {
-        feedbackListenersList.remove(listener);
-    }
-
-    public List<FeedbackListener> getFeedbackListenersList() {
-        return new ArrayList<>(feedbackListenersList);
-    }
-
-    private void notifyFeedbackListeners(String message) {
-        FeedbackEvent event = new FeedbackEvent(this, message);
-        for (FeedbackListener l : feedbackListenersList) {
-            l.onFeedback(event);
-        }
+    public void setFeedbackHandler(FeedbackHandler feedbackHandler) {
+        this.feedbackHandler = feedbackHandler;
     }
 
     // ___________________Uploader________________________
@@ -50,8 +60,10 @@ public class Administration {
     public boolean addUploaderToList(Uploader uploader) {
         if (uploader != null && checkIfUploaderAlreadyExists(uploader)) {
             uploaderList.add(uploader);
+            printStatus(uploader.getName() + " wurde erfolgreich hinzugefügt");
             return true;
         }
+        if (uploader != null) printStatus(uploader.getName() + " konnte nicht hinzugefügt werden");
         return false;
     }
 
@@ -64,16 +76,15 @@ public class Administration {
 
     // ___________________Adding Mediaobjects________________________
 
-    public boolean addMediaobjectToList(Uploader uploader, Collection<Tag> tags, long size, BigDecimal cost, int samplingRate) {
-        if (uploader == null) return false;
-        MediaObject mediaObject = new AudioImpl(uploader, tags, size, cost, samplingRate);
+    public boolean addMediaobjectToList(String uploaderName, Collection<Tag> tags, long size, BigDecimal cost, int samplingRate) {
+        MediaObject mediaObject = new AudioImpl(new UploaderImpl(uploaderName), tags, size, cost, samplingRate);
         mediaObject.setAddress(createAddress());
         if (isMediaObjectValid(mediaObject)) {
             administrationList.add(mediaObject);
-            notifyFeedbackListeners("Mediaobjekt hinzugefügt");
+            printStatus("Mediaobjekt wurde hinzufügen");
             return true;
         } else {
-            notifyFeedbackListeners("Mediaobjekt nicht hinzugefügt");
+            printStatus("Mediaobjekt konnte nicht hinzugefügt werden");
             return false;
         }
     }
@@ -119,11 +130,11 @@ public class Administration {
         for (MediaObject mediaObject : administrationList) {
             if (mediaObject.getAddress().equals(address)) {
                 administrationList.remove(mediaObject);
-                notifyFeedbackListeners("Mediaobjekt erfolgreich gelöscht");
+                printStatus("Mediaobjekt wurde gelöscht");
                 return true;
             }
         }
-        notifyFeedbackListeners("Meidaobjekt konnte nicht gelöscht werden");
+        printStatus("Mediaobjekt konnte nicht gelöscht werden");
         return false;
     }
 
@@ -133,11 +144,16 @@ public class Administration {
         for (MediaObject mediaObject : administrationList) {
             if (mediaObject.getAddress().equals(address)) {
                 mediaObject.incrementAccessCount();
-                notifyFeedbackListeners("Mediaobjekt erfolgreich geupdatet");
-                return true;
+                printStatus("Mediaobjekt wurde geupdatet");
             }
         }
-        notifyFeedbackListeners("Mediaobjekt konnte nicht geupdatet werden");
+        printStatus("Mediaobjekt konnte nicht geupdatet werden");
         return false;
+    }
+
+    @Override
+    public void printStatus(String message) {
+        feedbackHandler.handle(new FeedbackEvent(this, "Eventsystem meldet: " + message));
+        notifyObservers("Observable meldet: " + message);
     }
 }
