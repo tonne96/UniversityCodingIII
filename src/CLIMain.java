@@ -41,6 +41,7 @@ public class CLIMain {
         cli.setRemoveHandler(removeHandler);
         cli.setUpdateHandler(updateHandler);
 
+        // add cli to feedbacklistener from administration
         administration.addFeedbackListener(cli);
 
         // start controller

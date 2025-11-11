@@ -19,12 +19,18 @@ public class Administration {
     private final List<Uploader> uploaderList = new ArrayList<>();
     private final List<FeedbackListener> feedbackListenersList = new ArrayList<>();
 
+    // ___________________Feedbacklistener________________________
+
     public void addFeedbackListener(FeedbackListener listener) {
         feedbackListenersList.add(listener);
     }
 
     public void removeFeedbackListener(FeedbackListener listener) {
         feedbackListenersList.remove(listener);
+    }
+
+    public List<FeedbackListener> getFeedbackListenersList() {
+        return new ArrayList<>(feedbackListenersList);
     }
 
     private void notifyFeedbackListeners(String message) {
@@ -34,35 +40,11 @@ public class Administration {
         }
     }
 
+    // ___________________Uploader________________________
+
     public List<Uploader> getUploaderList() {
         return new ArrayList<>(uploaderList);
     }
-
-    private String createAddress() {
-        int id = index.getAndIncrement();
-        return "media://ID=" + id;
-    }
-
-    public boolean addMediaobjectToList(Uploader uploader, Collection<Tag> tags, long size, BigDecimal cost, int samplingRate) {
-        if (uploader == null) return false;
-        MediaObject mediaObject = new AudioImpl(uploader, tags, size, cost, samplingRate);
-        mediaObject.setAddress(createAddress());
-        if (isMediaObjectValid(mediaObject)) {
-            administrationList.add(mediaObject);
-            notifyFeedbackListeners("Mediaobjekt hinzugefügt");
-            return true;
-        } else {
-            notifyFeedbackListeners("Mediaobjekt nicht hinzugefügt");
-            return false;
-        }
-    }
-
-    private boolean isMediaObjectValid(MediaObject mediaObject) {
-        return checkIfMediaobjectBelongsToExistingUploader(mediaObject)
-                && checkMaxMediaSize(mediaObject)
-                && checkIfAddressIsUnique(mediaObject);
-    }
-
 
     public boolean addUploaderToList(Uploader uploader) {
         if (uploader != null && checkIfUploaderAlreadyExists(uploader)) {
@@ -79,6 +61,33 @@ public class Administration {
         return true;
     }
 
+    // ___________________Adding Mediaobjects________________________
+
+    public boolean addMediaobjectToList(Uploader uploader, Collection<Tag> tags, long size, BigDecimal cost, int samplingRate) {
+        if (uploader == null) return false;
+        MediaObject mediaObject = new AudioImpl(uploader, tags, size, cost, samplingRate);
+        mediaObject.setAddress(createAddress());
+        if (isMediaObjectValid(mediaObject)) {
+            administrationList.add(mediaObject);
+            notifyFeedbackListeners("Mediaobjekt hinzugefügt");
+            return true;
+        } else {
+            notifyFeedbackListeners("Mediaobjekt nicht hinzugefügt");
+            return false;
+        }
+    }
+
+    private String createAddress() {
+        int id = index.getAndIncrement();
+        return "media://ID=" + id;
+    }
+
+    private boolean isMediaObjectValid(MediaObject mediaObject) {
+        return checkIfMediaobjectBelongsToExistingUploader(mediaObject)
+                && checkMaxMediaSize(mediaObject)
+                && checkIfAddressIsUnique(mediaObject);
+    }
+
     private boolean checkIfMediaobjectBelongsToExistingUploader(MediaObject mediaObject) {
         for (Uploader uploader : uploaderList) {
             if (Objects.equals(mediaObject.getUploader().getName(), uploader.getName())) return true;
@@ -86,21 +95,24 @@ public class Administration {
         return false;
     }
 
-
     private boolean checkMaxMediaSize(MediaObject mediaObject) {
         return mediaObject.getSize() < mediaObject.getMaxSize();
     }
 
-    public boolean checkIfAddressIsUnique(MediaObject mediaObject) {
+    private boolean checkIfAddressIsUnique(MediaObject mediaObject) {
         for (MediaObject m : administrationList) {
             if (Objects.equals(mediaObject.getAddress(), m.getAddress())) return false;
         }
         return true;
     }
 
+    // ___________________List Mediaobjects________________________
+
     public List<MediaContent> listItems() {
         return new ArrayList<>(administrationList);
     }
+
+    // ___________________Remove Mediaobjects________________________
 
     public boolean remove(String address) {
         for (MediaObject mediaObject : administrationList) {
@@ -113,6 +125,8 @@ public class Administration {
         notifyFeedbackListeners("Meidaobjekt konnte nicht gelöscht werden");
         return false;
     }
+
+    // ___________________Update Mediaobjects________________________
 
     public boolean update(String address) {
         for (MediaObject mediaObject : administrationList) {

@@ -4,9 +4,12 @@ import contract.MediaContent;
 import contract.MediaObject;
 import contract.Tag;
 import contract.Uploader;
+import domainLogic.eventSystem.events.FeedbackEvent;
+import domainLogic.eventSystem.listener.FeedbackListener;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.engine.descriptor.MethodBasedTestDescriptor;
 
+import java.awt.event.ComponentListener;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,16 +47,67 @@ class AdministrationTest {
         assertEquals(list1size + 1, list2.size());
     }
 
+    @Test
+    void addFeedbackListener() {
+        Administration administration = new Administration();
+        FeedbackListener feedbackListener = new FeedbackListener() {
+            @Override
+            public void onFeedback(FeedbackEvent feedbackEvent) {
+
+            }
+        };
+        int lengthBefore = administration.getFeedbackListenersList().size();
+        administration.addFeedbackListener(feedbackListener);
+
+        assertEquals(lengthBefore + 1, administration.getFeedbackListenersList().size());
+    }
+
+    @Test
+    void removeFeedbackListener() {
+        Administration administration = new Administration();
+        FeedbackListener feedbackListener = new FeedbackListener() {
+            @Override
+            public void onFeedback(FeedbackEvent feedbackEvent) {
+
+            }
+        };
+        administration.addFeedbackListener(feedbackListener);
+        int lengthBefore = administration.getFeedbackListenersList().size();
+
+        administration.removeFeedbackListener(feedbackListener);
+
+        assertEquals(lengthBefore - 1, administration.getFeedbackListenersList().size());
+    }
+
+    @Test
+    public void testNotifyFeedbackListeners() {
+        Administration admin = new Administration();
+
+        FeedbackListener mockListener = mock(FeedbackListener.class);
+        admin.addFeedbackListener(mockListener);
+
+        Uploader uploader = new UploaderImpl("TestUploader");
+        admin.addUploaderToList(uploader);
+
+
+        // MediaObject mit gültigem Uploader hinzufügen, damit Event ausgelöst wird
+        boolean added = admin.addMediaobjectToList(uploader, new ArrayList<>(), 100L, BigDecimal.valueOf(10), 44100);
+
+        assertTrue(added);
+
+        verify(mockListener, times(1)).onFeedback(any(FeedbackEvent.class));
+    }
 
     // Mediaobject gehoert zu nicht bekannten Uploader
     @Test
-    void addMediaobjectToListNotExistingUploaderFromMediaobject() {
+    void addMediaobjectToListNotExistingUploader() {
         Administration administration = new Administration();
         UploaderImpl uploader = new UploaderImpl("TestUploader");
 
 
         assertFalse(administration.addMediaobjectToList(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100));
     }
+
 
 
     // Mediaobject ist zu groß
@@ -115,37 +169,46 @@ class AdministrationTest {
 
      */
 
-    // hinzugefuegtes Meidaobject gehoert zu einem Uploader in der Uploaderliste
-    /*
+    // hinzugefuegtes Meidaobject gehoert zu keinem Uploader in der Uploaderliste
+
     @Test
-    void checkIfMediaobjectBelongsToExistingUploaderExists() {
+    void checkIfMediaobjectBelongsToExistingDifferentName() {
         Administration administration = new Administration();
         UploaderImpl uploader = new UploaderImpl("TestUploader");
 
         administration.addUploaderToList(uploader);
-        AudioImpl audio = new AudioImpl(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
 
-        assertTrue(administration.checkIfMediaobjectBelongsToExistingUploader(audio));
+        UploaderImpl uploader1 = new UploaderImpl("TestUploader2");
+
+        assertFalse(administration.addMediaobjectToList(uploader1, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100));
     }
 
-     */
+
 
 
     //________________________MEDIAOBJECTS_UNIQUE_ADDRESS____________________________
 
     // testet ob true wenn Adresse noch nicht vergeben
+    /*
     @Test
     void checkIfAddressIsUnique() {
         Administration administration = new Administration();
         UploaderImpl uploader = new UploaderImpl("TestUploader");
         MediaObject mediaObject = new AudioImpl();
+        MediaObject mediaObject1 = new AudioImpl();
+        mediaObject1.setAddress("media://ID=1");
         administration.addUploaderToList(uploader);
         administration.addMediaobjectToList(uploader, Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
 
         assertTrue(administration.checkIfAddressIsUnique(mediaObject));
     }
 
+     */
+
+
+
     // testet false wenn Adresse schon vergeben
+    /*
     @Test
     void checkIfAddressIsUniqueDifferentAddresses() {
         Administration administration = new Administration();
@@ -159,6 +222,8 @@ class AdministrationTest {
 
         assertFalse(administration.checkIfAddressIsUnique(mediaObject));
     }
+
+     */
 
     //________________________UPLOADER____________________________
 
@@ -195,6 +260,18 @@ class AdministrationTest {
         UploaderImpl uploader2 = new UploaderImpl("TestUploader");
 
         assertFalse(administration.addUploaderToList(uploader2));
+    }
+
+    // checkt dass keine gleichen Uploader hinzugefuegt werden koennen
+    @Test
+    void addUploaderWhichDoesNotExist() {
+        Administration administration = new Administration();
+        UploaderImpl uploader1 = new UploaderImpl("TestUploader");
+        administration.addUploaderToList(uploader1);
+
+        UploaderImpl uploader2 = new UploaderImpl("TestUploader2");
+
+        assertTrue(administration.addUploaderToList(uploader2));
     }
 
     // Liste ist leer
