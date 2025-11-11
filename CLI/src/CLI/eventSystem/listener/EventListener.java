@@ -1,4 +1,4 @@
-package domainLogic.eventSystem.listener;
+package CLI.eventSystem.listener;
 
 
 import java.util.EventObject;

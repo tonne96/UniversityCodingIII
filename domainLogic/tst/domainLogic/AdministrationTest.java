@@ -1,20 +1,17 @@
 package domainLogic;
 
+import CLI.eventSystem.events.FeedbackEvent;
+import CLI.eventSystem.listener.FeedbackListener;
 import contract.MediaContent;
 import contract.MediaObject;
 import contract.Tag;
 import contract.Uploader;
-import domainLogic.eventSystem.events.FeedbackEvent;
-import domainLogic.eventSystem.listener.FeedbackListener;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.engine.descriptor.MethodBasedTestDescriptor;
 
-import java.awt.event.ComponentListener;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

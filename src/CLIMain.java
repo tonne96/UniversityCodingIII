@@ -1,13 +1,13 @@
 import CLI.CLI;
 import domainLogic.Administration;
-import domainLogic.eventSystem.handler.AddHandler;
-import domainLogic.eventSystem.handler.ListHandler;
-import domainLogic.eventSystem.handler.RemoveHandler;
-import domainLogic.eventSystem.handler.UpdateHandler;
-import domainLogic.eventSystem.listener.AddListener;
-import domainLogic.eventSystem.listener.ListListener;
-import domainLogic.eventSystem.listener.RemoveListener;
-import domainLogic.eventSystem.listener.UpdateListener;
+import CLI.eventSystem.handler.AddHandler;
+import CLI.eventSystem.handler.ListHandler;
+import CLI.eventSystem.handler.RemoveHandler;
+import CLI.eventSystem.handler.UpdateHandler;
+import CLI.eventSystem.listener.AddListener;
+import CLI.eventSystem.listener.ListListener;
+import CLI.eventSystem.listener.RemoveListener;
+import CLI.eventSystem.listener.UpdateListener;
 
 public class CLIMain {
     public static void main(String[] args) {

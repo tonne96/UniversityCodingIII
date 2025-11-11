@@ -1,7 +1,7 @@
-package domainLogic.eventSystem.listener;
+package CLI.eventSystem.listener;
 
 import domainLogic.Administration;
-import domainLogic.eventSystem.events.RemoveEvent;
+import CLI.eventSystem.events.RemoveEvent;
 
 public class RemoveListener implements EventListener<RemoveEvent> {
     Administration administration;

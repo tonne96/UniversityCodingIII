@@ -1,11 +1,12 @@
 package domainLogic;
 
+import CLI.eventSystem.events.FeedbackEvent;
+import CLI.eventSystem.listener.FeedbackListener;
 import contract.MediaContent;
 import contract.MediaObject;
 import contract.Tag;
 import contract.Uploader;
-import domainLogic.eventSystem.events.FeedbackEvent;
-import domainLogic.eventSystem.listener.FeedbackListener;
+
 
 import java.math.BigDecimal;
 import java.util.*;

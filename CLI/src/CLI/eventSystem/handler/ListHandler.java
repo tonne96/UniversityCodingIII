@@ -1,7 +1,7 @@
-package domainLogic.eventSystem.handler;
+package CLI.eventSystem.handler;
 
-import domainLogic.eventSystem.events.ListEvent;
-import domainLogic.eventSystem.listener.ListListener;
+import CLI.eventSystem.events.ListEvent;
+import CLI.eventSystem.listener.ListListener;
 
 import java.util.EventListener;
 import java.util.LinkedList;

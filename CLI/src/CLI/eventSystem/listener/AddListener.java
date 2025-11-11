@@ -1,9 +1,9 @@
-package domainLogic.eventSystem.listener;
+package CLI.eventSystem.listener;
 
 import contract.Tag;
 import domainLogic.Administration;
 import domainLogic.UploaderImpl;
-import domainLogic.eventSystem.events.AddEvent;
+import CLI.eventSystem.events.AddEvent;
 
 import java.math.BigDecimal;
 import java.util.Collections;

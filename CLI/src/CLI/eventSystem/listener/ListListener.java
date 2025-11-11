@@ -1,8 +1,8 @@
-package domainLogic.eventSystem.listener;
+package CLI.eventSystem.listener;
 
 import contract.MediaContent;
 import domainLogic.Administration;
-import domainLogic.eventSystem.events.ListEvent;
+import CLI.eventSystem.events.ListEvent;
 
 import java.util.List;
 

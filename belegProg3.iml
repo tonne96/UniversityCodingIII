@@ -14,5 +14,6 @@
     <orderEntry type="module" module-name="IO" />
     <orderEntry type="module" module-name="Net" />
     <orderEntry type="module" module-name="Sim" />
+    <orderEntry type="module" module-name="eventsystem" />
   </component>
 </module>

@@ -1,8 +1,11 @@
 package CLI;
 
-import domainLogic.eventSystem.events.*;
-import domainLogic.eventSystem.handler.*;
-import domainLogic.eventSystem.listener.FeedbackListener;
+import CLI.eventSystem.events.*;
+import CLI.eventSystem.handler.AddHandler;
+import CLI.eventSystem.handler.ListHandler;
+import CLI.eventSystem.handler.RemoveHandler;
+import CLI.eventSystem.handler.UpdateHandler;
+import CLI.eventSystem.listener.FeedbackListener;
 
 import java.util.Scanner;
 

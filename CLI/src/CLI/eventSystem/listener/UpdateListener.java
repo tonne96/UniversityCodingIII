@@ -1,7 +1,7 @@
-package domainLogic.eventSystem.listener;
+package CLI.eventSystem.listener;
 
 import domainLogic.Administration;
-import domainLogic.eventSystem.events.UpdateEvent;
+import CLI.eventSystem.events.UpdateEvent;
 
 public class UpdateListener implements EventListener<UpdateEvent> {
     Administration administration;
