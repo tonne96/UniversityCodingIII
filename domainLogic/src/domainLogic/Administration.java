@@ -18,7 +18,14 @@ public class Administration implements Model, Observable {
     AtomicInteger index = new AtomicInteger(1);
     private final ArrayList<MediaObject> administrationList = new ArrayList<>();
     private final List<Uploader> uploaderList = new ArrayList<>();
+
+    // Feedback Eventsystem
     private FeedbackHandler feedbackHandler;
+
+    public void setFeedbackHandler(FeedbackHandler feedbackHandler) {
+        this.feedbackHandler = feedbackHandler;
+    }
+    // Observersystem
     private final List<Observer> observerList = new LinkedList<>();
     String status;
 
@@ -44,12 +51,6 @@ public class Administration implements Model, Observable {
         return status;
     }
 
-    // ___________________Feedbacklistener________________________
-
-
-    public void setFeedbackHandler(FeedbackHandler feedbackHandler) {
-        this.feedbackHandler = feedbackHandler;
-    }
 
     // ___________________Uploader________________________
 
@@ -81,7 +82,7 @@ public class Administration implements Model, Observable {
         mediaObject.setAddress(createAddress());
         if (isMediaObjectValid(mediaObject)) {
             administrationList.add(mediaObject);
-            printStatus("Mediaobjekt wurde hinzufügen");
+            printStatus("Mediaobjekt wurde hinzugefügt");
             return true;
         } else {
             printStatus("Mediaobjekt konnte nicht hinzugefügt werden");
@@ -151,6 +152,7 @@ public class Administration implements Model, Observable {
         return false;
     }
 
+    // FeedbackEvent erstellen & Observer benachrichtigen
     @Override
     public void printStatus(String message) {
         feedbackHandler.handle(new FeedbackEvent(this, "Eventsystem meldet: " + message));
