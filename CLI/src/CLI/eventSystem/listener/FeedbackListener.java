@@ -4,7 +4,7 @@ import CLI.eventSystem.events.FeedbackEvent;
 import domainLogic.Model;
 
 public class FeedbackListener <E extends Model> implements EventListener<FeedbackEvent> {
-    private E model;
+    private final E model;
 
     public FeedbackListener(E model) {
         this.model = model;
