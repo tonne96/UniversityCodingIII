@@ -1,8 +1,10 @@
 import CLI.CLI;
+import CLI.eventSystem.events.*;
 import CLI.eventSystem.handler.*;
 import CLI.eventSystem.listener.*;
 import CLI.eventSystem.observer.AdministrationObserver;
 import domainLogic.Administration;
+import domainLogic.Model;
 
 public class CLIMain {
     public static void main(String[] args) {
@@ -13,11 +15,11 @@ public class CLIMain {
         CLI cli = new CLI();
 
         // create handler
-        AddMediaobjectHandler addMediaobjectHandler = new AddMediaobjectHandler();
-        AddUploaderHandler addUploaderHandler = new AddUploaderHandler();
-        ListHandler listHandler = new ListHandler();
-        RemoveHandler removeHandler = new RemoveHandler();
-        UpdateHandler updateHandler = new UpdateHandler();
+        Handler<AddMediaobjectListener, AddMediaobjectEvent> addMediaobjectHandler = new Handler<>();
+        Handler<AddUploaderListener, AddUploaderEvent> addUploaderHandler = new Handler<>();
+        Handler<ListListener, ListEvent> listHandler = new Handler<>();
+        Handler<RemoveListener, RemoveEvent> removeHandler = new Handler<>();
+        Handler<UpdateListener, UpdateEvent> updateHandler = new Handler<>();
 
         // create listener
         AddMediaobjectListener addMediaobjectListener = new AddMediaobjectListener(administration);
@@ -41,12 +43,12 @@ public class CLIMain {
         cli.setUpdateHandler(updateHandler);
 
         // create Feebacklistener
-        FeedbackListener CLIfeedbackListener = new FeedbackListener(cli);
-        FeedbackListener adminFeedbackListener = new FeedbackListener(administration);
+        FeedbackListener<CLI> CLIfeedbackListener = new FeedbackListener<>(cli);
+        FeedbackListener<Administration> adminFeedbackListener = new FeedbackListener<>(administration);
 
         // create Feedbackhandler
         FeedbackHandler adminFeedbackHandler = new FeedbackHandler();
-        FeedbackHandler CLIfeedbackHandler = new FeedbackHandler();
+        Handler<FeedbackListener<? extends Model>, FeedbackEvent> CLIfeedbackHandler = new Handler<>();
 
         // add FeedbackListeners
         adminFeedbackHandler.addListener(adminFeedbackListener);

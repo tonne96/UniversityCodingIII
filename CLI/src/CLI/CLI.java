@@ -2,8 +2,10 @@ package CLI;
 
 import CLI.eventSystem.events.*;
 import CLI.eventSystem.handler.*;
+import CLI.eventSystem.listener.*;
 import domainLogic.Model;
 
+import java.util.EventObject;
 import java.util.Scanner;
 
 public class CLI implements Model {
@@ -24,29 +26,29 @@ public class CLI implements Model {
     Listener bekommen ein Administrationsmodel welches in der Main instanziert wird
      */
 
-    private AddMediaobjectHandler addMediaobjectHandler;
-    private AddUploaderHandler addUploaderHandler;
-    private ListHandler listHandler;
-    private RemoveHandler removeHandler;
-    private UpdateHandler updateHandler;
-    private FeedbackHandler feedbackHandler;
+    private Handler<AddMediaobjectListener, AddMediaobjectEvent> addMediaobjectHandler;
+    private Handler<AddUploaderListener, AddUploaderEvent> addUploaderHandler;
+    private Handler<ListListener, ListEvent> listHandler;
+    private Handler<RemoveListener, RemoveEvent> removeHandler;
+    private Handler<UpdateListener, UpdateEvent> updateHandler;
+    private Handler<FeedbackListener<? extends Model>, FeedbackEvent> feedbackHandler;
 
-    public void setAddMediaobjectHandler(AddMediaobjectHandler addMediaobjectHandler) {
+    public void setAddMediaobjectHandler(Handler<AddMediaobjectListener, AddMediaobjectEvent> addMediaobjectHandler) {
         this.addMediaobjectHandler = addMediaobjectHandler;
     }
-    public void setListHandler(ListHandler listHandler) {
+    public void setListHandler(Handler<ListListener, ListEvent> listHandler) {
         this.listHandler = listHandler;
     }
-    public void setRemoveHandler(RemoveHandler removeHandler) {
+    public void setRemoveHandler(Handler<RemoveListener, RemoveEvent> removeHandler) {
         this.removeHandler = removeHandler;
     }
-    public void setUpdateHandler(UpdateHandler updateHandler) {
+    public void setUpdateHandler(Handler<UpdateListener, UpdateEvent> updateHandler) {
         this.updateHandler = updateHandler;
     }
-    public void setFeedbackHandler(FeedbackHandler feedbackHandler) {
+    public void setFeedbackHandler(Handler<FeedbackListener<? extends Model>, FeedbackEvent> feedbackHandler) {
         this.feedbackHandler = feedbackHandler;
     }
-    public void setUploaderHandler(AddUploaderHandler uploaderHandler) {
+    public void setUploaderHandler(Handler<AddUploaderListener, AddUploaderEvent> uploaderHandler) {
         this.addUploaderHandler = uploaderHandler;
     }
 
