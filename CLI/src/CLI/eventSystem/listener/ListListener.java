@@ -19,7 +19,7 @@ public class ListListener implements EventListener<ListEvent> {
     public void onEvent(ListEvent listEvent) {
         // Erstellt neuen Handler und leitet liste an neues Printevent weiter
         Handler<PrintListener, PrintEvent> printHandler = new Handler<>();
-        printHandler.addListener(new PrintListener(this.administration));
+        printHandler.addListener(new PrintListener());
         printHandler.handle(new PrintEvent(this, this.administration.listItems()));
     }
 }

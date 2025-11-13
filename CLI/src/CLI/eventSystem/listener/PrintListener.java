@@ -5,11 +5,6 @@ import contract.MediaContent;
 import domainLogic.Administration;
 
 public class PrintListener implements EventListener<PrintEvent>{
-    Administration administration;
-
-    public PrintListener(Administration administration) {
-        this.administration = administration;
-    }
 
     @Override
     public void onEvent(PrintEvent event) {
