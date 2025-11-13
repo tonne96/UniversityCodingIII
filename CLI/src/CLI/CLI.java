@@ -3,8 +3,11 @@ package CLI;
 import CLI.eventSystem.events.*;
 import CLI.eventSystem.handler.*;
 import CLI.eventSystem.listener.*;
+import contract.Tag;
 import domainLogic.Model;
 
+import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.EventObject;
 import java.util.Scanner;
 
@@ -59,7 +62,7 @@ public class CLI implements Model {
                         // Untermenü zum einfügen von Uploader oder Mediaobject
                         // wie in Anforderungen ein vordefinierter Uploader und ein vordefiniertes Mediaobjekt
                         case ":u" : addUploaderHandler.handle(new AddUploaderEvent(this, "TestUploader")); break;
-                        case ":m" : addMediaobjectHandler.handle(new AddMediaobjectEvent(this)); break;
+                        case ":m" : addMediaobjectHandler.handle(new AddMediaobjectEvent(this, "TestUploader", Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100)); break;
                         default:
                             System.out.println("Ungueltige Eingabe" + "\n");
                     } break;
@@ -69,10 +72,12 @@ public class CLI implements Model {
                     break;
                 }
                 case ":u" : {
+                    // vorläufig vordefinierte Adresse
                     updateHandler.handle(new UpdateEvent(this, "media://ID=1"));
                     break;
                 }
                 case ":d" : {
+                    // vorläufig vordefinierte Adresse
                     removeHandler.handle(new RemoveEvent(this, "media://ID=1"));
                     break;
                 }

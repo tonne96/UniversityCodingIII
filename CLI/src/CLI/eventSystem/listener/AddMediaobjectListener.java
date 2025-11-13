@@ -17,6 +17,6 @@ public class AddMediaobjectListener implements EventListener<AddMediaobjectEvent
 
     @Override
     public void onEvent(AddMediaobjectEvent event) {
-        this.administration.addMediaobjectToList("TestUploader", Collections.singleton(Tag.Music), 1024L, BigDecimal.valueOf(10), 44100);
+        this.administration.addMediaobjectToList(event.getUploaderName(), event.getTags(), event.getSize(), event.getCost(), event.getSamplingRate());
     }
 }
