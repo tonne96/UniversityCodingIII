@@ -33,7 +33,7 @@ public class CLIMain {
         addUploaderHandler.addListener(addUploaderListener);
         listHandler.addListener(listListener);
         removeHandler.addListener(removeListener);
-        updateHandler.addListener(updateListener);
+        updateHandler.addListener(updateListener);  
 
         // set models
         cli.setAddMediaobjectHandler(addMediaobjectHandler);

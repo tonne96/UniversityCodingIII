@@ -10,22 +10,6 @@ import java.util.Scanner;
 
 public class CLI implements Model {
 
-
-    /*
-    todo
-    erstellt Eventobjekt welches zum Typ der Eingabe passt mit Informationen hinterlegt
-    hat Handler für verschiedene CRUD
-    übergibt AddMediaobjectEvent an passenden Handler
-    verschiedene Eventtypen für CRUD
-    4 Events für CRUD
-    4 Handler für CRUD
-    4 Listener für CRUD
-    Main
-    create Handler, AddMediaobjectEvent, Listener
-    setHandlers
-    Listener bekommen ein Administrationsmodel welches in der Main instanziert wird
-     */
-
     private Handler<AddMediaobjectListener, AddMediaobjectEvent> addMediaobjectHandler;
     private Handler<AddUploaderListener, AddUploaderEvent> addUploaderHandler;
     private Handler<ListListener, ListEvent> listHandler;
@@ -72,6 +56,8 @@ public class CLI implements Model {
                             """);
                     String enteredValueAdding = scanner.nextLine();
                     switch (enteredValueAdding) {
+                        // Untermenü zum einfügen von Uploader oder Mediaobject
+                        // wie in Anforderungen ein vordefinierter Uploader und ein vordefiniertes Mediaobjekt
                         case ":u" : addUploaderHandler.handle(new AddUploaderEvent(this, "TestUploader")); break;
                         case ":m" : addMediaobjectHandler.handle(new AddMediaobjectEvent(this)); break;
                         default:
