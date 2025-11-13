@@ -7,11 +7,11 @@ import java.util.Collection;
 import java.util.EventObject;
 
 public class AddMediaobjectEvent extends EventObject {
-    String uploaderName;
-    Collection<Tag> tags;
-    long size;
-    BigDecimal cost;
-    int samplingRate;
+    private final String uploaderName;
+    private final Collection<Tag> tags;
+    private final long size;
+    private final BigDecimal cost;
+    private final int samplingRate;
     /**
      * Constructs a prototypical AddMediaobjectEvent.
      *

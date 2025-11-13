@@ -1,5 +1,7 @@
 package CLI.eventSystem.listener;
 
+import CLI.eventSystem.events.PrintEvent;
+import CLI.eventSystem.handler.Handler;
 import contract.MediaContent;
 import domainLogic.Administration;
 import CLI.eventSystem.events.ListEvent;
@@ -15,13 +17,9 @@ public class ListListener implements EventListener<ListEvent> {
 
     @Override
     public void onEvent(ListEvent listEvent) {
-        List<MediaContent> mediaObjectList = this.administration.listItems();
-        for (MediaContent m : mediaObjectList) {
-            System.out.println(
-                    "Adresse: " + m.getAddress() + " | " +
-                    "Medientyp: " + m.getClass().getSimpleName() + " |"
-                            + " Tag: " + m.getTags()
-            );
-        }
+        // Erstellt neuen Handler und leitet liste an neues Printevent weiter
+        Handler<PrintListener, PrintEvent> printHandler = new Handler<>();
+        printHandler.addListener(new PrintListener(this.administration));
+        printHandler.handle(new PrintEvent(this, this.administration.listItems()));
     }
 }

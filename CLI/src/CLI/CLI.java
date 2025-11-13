@@ -26,6 +26,7 @@ public class CLI implements Model {
     public void setListHandler(Handler<ListListener, ListEvent> listHandler) {
         this.listHandler = listHandler;
     }
+
     public void setRemoveHandler(Handler<RemoveListener, RemoveEvent> removeHandler) {
         this.removeHandler = removeHandler;
     }
